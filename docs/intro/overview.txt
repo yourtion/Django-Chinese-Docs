@@ -1,5 +1,5 @@
 ==================
-Django at a glance
+初探 Django
 ==================
 
 Because Django was developed in a fast-paced newsroom environment, it was

@@ -1,5 +1,5 @@
 =============================================
-Advanced tutorial: How to write reusable apps
+进阶教程：如何编写可重用的应用程序
 =============================================
 
 This advanced tutorial begins where :doc:`Tutorial 5 </intro/tutorial05>` left

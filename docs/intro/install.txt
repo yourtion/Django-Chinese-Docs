@@ -1,4 +1,4 @@
-Quick install guide
+快速安装指南
 ===================
 
 Before you can use Django, you'll need to get it installed. We have a

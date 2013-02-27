@@ -1,5 +1,5 @@
 ===================================
-Writing your first patch for Django
+为Django编写属于你的首个补丁
 ===================================
 
 Introduction
