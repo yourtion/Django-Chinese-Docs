@@ -6,8 +6,8 @@ Django 新手？或刚开始 web 开发？恭喜你，来对地方了：阅读�
 .. toctree::
    :maxdepth: 1
 
-   初探Django <overview>
-   快速安装指南 <install>
+   overview
+   install
    tutorial01
    tutorial02
    tutorial03
