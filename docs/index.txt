@@ -5,25 +5,23 @@
 Django 中文文档
 ====================
 
-.. rubric:: .
+.. rubric::  这里有你需要知道的有關Django的一切。
 
 Getting help
-============
+============  
 
-Having trouble? We'd like to help!
+有问题吗？ 我们希望以下对大家有所帮助！
 
-* Try the :doc:`FAQ <faq/index>` -- it's got answers to many common questions.
+* 试试 :doc:`常见问题 <faq/index>` -- 它对许多常见的问题作了解答。
 
-* Looking for specific information? Try the :ref:`genindex`, :ref:`modindex` or
-  the :doc:`detailed table of contents <contents>`.
+* 寻找特定的信息？ 试试  :ref:`文档索引<genindex>`, :ref:`模块索引<modindex>` 或者 :doc:`文档目录 <contents>` 。
 
-* Search for information in the `archives of the django-users mailing list`_, or
-  `post a question`_.
+* 搜索 `django-users邮件列表 <archives of the django-users mailing list>`_,或者 
+  `提交一个问题 <post a question>`_ 。
 
-* Ask a question in the `#django IRC channel`_, or search the `IRC logs`_ to see
-  if it's been asked before.
+* 在 `#django IRC channel`_ 上提问, 或者搜索 `IRC logs`_ 看下是否已经有人问过类似的问题。
 
-* Report bugs with Django in our `ticket tracker`_.
+* 在我们的 `ticket tracker`_ 上报告Django的bug.
 
 .. _archives of the django-users mailing list: http://groups.google.com/group/django-users/
 .. _post a question: http://groups.google.com/group/django-users/
@@ -31,39 +29,38 @@ Having trouble? We'd like to help!
 .. _IRC logs: http://django-irc-logs.com/
 .. _ticket tracker: https://code.djangoproject.com/
 
-First steps
+新手入门
 ===========
 
-Are you new to Django or to programming? This is the place to start!
+初次接触Django或编程吗? 从这里开始吧!
 
-* **From scratch:**
-  :doc:`Overview <intro/overview>` |
-  :doc:`Installation <intro/install>`
+* **从零开始:**
+  :doc:`概览 <intro/overview>` |
+  :doc:`安装 <intro/install>`
 
-* **Tutorial:**
-  :doc:`Part 1 <intro/tutorial01>` |
-  :doc:`Part 2 <intro/tutorial02>` |
-  :doc:`Part 3 <intro/tutorial03>` |
-  :doc:`Part 4 <intro/tutorial04>` |
-  :doc:`Part 5 <intro/tutorial05>`
+* **新手教程:**
+  :doc:`第1部分 <intro/tutorial01>` |
+  :doc:`第2部分 <intro/tutorial02>` |
+  :doc:`第3部分 <intro/tutorial03>` |
+  :doc:`第4部分 <intro/tutorial04>` |
+  :doc:`第5部分 <intro/tutorial05>`
 
-* **Advanced Tutorials:**
-  :doc:`How to write reusable apps <intro/reusable-apps>` |
-  :doc:`Writing your first patch for Django <intro/contributing>`
+* **进阶教程:**
+  :doc:`如何编写可重用的应用程序 <intro/reusable-apps>` |
+  :doc:`为Django编写属于你的首个补丁 <intro/contributing>`
 
-The model layer
+模型层(model)
 ===============
 
-Django provides an abstraction layer (the "models") for structuring and
-manipulating the data of your Web application. Learn more about it below:
+Django提供了一个抽象层(the "models"),对您的web应用中的数据进行构建及操纵。通过以下内容来了解更多:
 
-* **Models:**
-  :doc:`Model syntax <topics/db/models>` |
-  :doc:`Field types <ref/models/fields>` |
-  :doc:`Meta options <ref/models/options>`
+* **模型(Models):**
+  :doc:`模型语法 <topics/db/models>` |
+  :doc:`字段类型 <ref/models/fields>` |
+  :doc:`Meta选项 <ref/models/options>`
 
-* **QuerySets:**
-  :doc:`Executing queries <topics/db/queries>` |
+* **查询集(QuerySets):**
+  :doc:`执行查询 <topics/db/queries>` |
   :doc:`QuerySet method reference <ref/models/querysets>`
 
 * **Model instances:**
@@ -84,7 +81,7 @@ manipulating the data of your Web application. Learn more about it below:
   :doc:`Providing initial data <howto/initial-data>` |
   :doc:`Optimize database access <topics/db/optimization>`
 
-The view layer
+视图层(view)
 ==============
 
 Django has the concept of "views" to encapsulate the logic responsible for
@@ -124,7 +121,7 @@ to know about views via the links below:
   :doc:`Overview <topics/http/middleware>` |
   :doc:`Built-in middleware classes <ref/middleware>`
 
-The template layer
+模板层(template)
 ==================
 
 The template layer provides a designer-friendly syntax for rendering the
@@ -141,8 +138,8 @@ designers and how it can be extended by programmers:
   :doc:`Template API <ref/templates/api>` |
   :doc:`Custom tags and filters <howto/custom-template-tags>`
 
-Forms
-=====
+表单(Forms)
+============
 
 Django provides a rich framework to facilitate the creation of forms and the
 manipulation of form data.
@@ -163,7 +160,7 @@ manipulation of form data.
   :doc:`Form preview <ref/contrib/formtools/form-preview>` |
   :doc:`Form wizard <ref/contrib/formtools/form-wizard>`
 
-The development process
+开发进程
 =======================
 
 Learn about the various components and tools to help you in the development and
@@ -193,7 +190,7 @@ testing of Django applications:
   :doc:`Handling static files <howto/static-files>` |
   :doc:`Tracking code errors by email <howto/error-reporting>`
 
-The admin
+管理
 =========
 
 Find all you need to know about the automated admin interface, one of Django's
@@ -203,7 +200,7 @@ most popular features:
 * :doc:`Admin actions <ref/contrib/admin/actions>`
 * :doc:`Admin documentation generator<ref/contrib/admin/admindocs>`
 
-Security
+安全
 ========
 
 Security is a topic of paramount importance in the development of Web
@@ -214,7 +211,7 @@ applications and Django provides multiple protection tools and mechanisms:
 * :doc:`Cross Site Request Forgery protection <ref/contrib/csrf>`
 * :doc:`Cryptographic signing <topics/signing>`
 
-Internationalization and localization
+国际化和本地化
 =====================================
 
 Django offers a robust internationalization and localization framework to
@@ -227,7 +224,7 @@ regions:
 * :doc:`"Local flavor" <ref/contrib/localflavor>`
 * :doc:`Time zones </topics/i18n/timezones>`
 
-Python compatibility
+Python的兼容性
 ====================
 
 Django aims to be compatible with multiple different flavors and versions of
@@ -236,14 +233,14 @@ Python:
 * :doc:`Jython support <howto/jython>`
 * :doc:`Python 3 compatibility <topics/python3>`
 
-Geographic framework
+地理框架
 ====================
 
 :doc:`GeoDjango <ref/contrib/gis/index>` intends to be a world-class geographic
 Web framework. Its goal is to make it as easy as possible to build GIS Web
 applications and harness the power of spatially enabled data.
 
-Common Web application tools
+常用的web应用工具
 ============================
 
 Django offers multiple tools commonly needed in the development of Web
@@ -263,7 +260,7 @@ applications:
 * :doc:`Static files management <ref/contrib/staticfiles>`
 * :doc:`Data validation <ref/validators>`
 
-Other core functionalities
+其他核心功能
 ==========================
 
 Learn about some other core functionalities of the Django framework:
@@ -277,7 +274,7 @@ Learn about some other core functionalities of the Django framework:
 * :doc:`The sites framework <ref/contrib/sites>`
 * :doc:`Unicode in Django <ref/unicode>`
 
-The Django open-source project
+Django开源项目
 ==============================
 
 Learn about the development process for the Django project itself and about how
