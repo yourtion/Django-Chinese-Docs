@@ -5,7 +5,7 @@
 Django 中文文档
 ====================
 
-.. rubric::  这里有你需要知道的有關Django的一切。
+.. rubric::  这里有你需要知道的有关Django的一切。
 
 Getting help
 ============  
