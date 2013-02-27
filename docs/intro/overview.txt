@@ -2,27 +2,20 @@
 初探 Django
 ==================
 
-Because Django was developed in a fast-paced newsroom environment, it was
-designed to make common Web-development tasks fast and easy. Here's an informal
-overview of how to write a database-driven Web app with Django.
+由于Django是在一个快节奏的新闻编辑室环境下开发出来的，因此它被设计成让普通的网站开发工作简单而快
+捷。以下简单介绍了如何用 Django 编写一个数据库驱动的Web应用程序。
 
-The goal of this document is to give you enough technical specifics to
-understand how Django works, but this isn't intended to be a tutorial or
-reference -- but we've got both! When you're ready to start a project, you can
-:doc:`start with the tutorial </intro/tutorial01>` or :doc:`dive right into more
-detailed documentation </topics/index>`.
+本文档的目标是给你描述足够的技术细节能让你理解Django是如何工作的，但是它并不表示是一个新手指南或参考目录
+-- 其实这些我们都有! 当你准备新建一个项目，你可以 :doc:`从新手指南开始 </intro/tutorial01>` 或者 :doc:`深入阅读详细的文档 </topics/index>`.
 
-Design your model
-=================
+设计你的模型(model)
+======================
 
-Although you can use Django without a database, it comes with an
-object-relational mapper in which you describe your database layout in Python
-code.
+尽管你在 Django 中可以不使用数据库，但是它提供了一个完善的可以用 Python
+代码描述你的数据库结构的对象关联映射(ORM)。
 
-The :doc:`data-model syntax </topics/db/models>` offers many rich ways of
-representing your models -- so far, it's been solving two years' worth of
-database-schema problems. Here's a quick example, which might be saved in
-the file ``mysite/news/models.py``::
+:doc:`数据模型语法 </topics/db/models>` 提供了许多丰富的方法来展现你的模型 --
+到目前为止，它已经解决了两个多年积累下来数据库架构问题。下面是个简单的例子，可能被保存为 ``mysite/news/models.py``::
 
     class Reporter(models.Model):
         full_name = models.CharField(max_length=70)
@@ -39,24 +32,23 @@ the file ``mysite/news/models.py``::
         def __unicode__(self):
             return self.headline
 
-Install it
+安装它
 ==========
 
-Next, run the Django command-line utility to create the database tables
-automatically:
+下一步，运行 Django 命令行工具来自动创建数据库表：
 
 .. code-block:: bash
 
     manage.py syncdb
 
-The :djadmin:`syncdb` command looks at all your available models and creates
-tables in your database for whichever tables don't already exist.
+:djadmin:`syncdb`
+命令会查找你所有可用的模型(models)然后在你的数据库中创建还不存在的数据库表。
 
-Enjoy the free API
+享用便捷的 API
 ==================
 
-With that, you've got a free, and rich, :doc:`Python API </topics/db/queries>` to
-access your data. The API is created on the fly, no code generation necessary:
+接着，你就可以使用一个便捷且功能丰富的 :doc:`Python API </topics/db/queries>`
+来访问你的数据。API 是动态生成的，不需要代码生成:
 
 .. code-block:: python
 
@@ -129,7 +121,7 @@ access your data. The API is created on the fly, no code generation necessary:
     # Delete an object with delete().
     >>> r.delete()
 
-A dynamic admin interface: it's not just scaffolding -- it's the whole house
+一个动态的管理接口：它不仅仅是个脚手架 -- 还是个完整的房子
 ============================================================================
 
 Once your models are defined, Django can automatically create a professional,
@@ -163,7 +155,7 @@ One typical workflow in creating Django apps is to create models and get the
 admin sites up and running as fast as possible, so your staff (or clients) can
 start populating data. Then, develop the way data is presented to the public.
 
-Design your URLs
+设计你的 URLs
 ================
 
 A clean, elegant URL scheme is an important detail in a high-quality Web
@@ -202,7 +194,7 @@ For example, if a user requested the URL "/articles/2005/05/39323/", Django
 would call the function ``news.views.article_detail(request,
 '2005', '05', '39323')``.
 
-Write your views
+编写你的视图(views)
 ================
 
 Each view is responsible for doing one of two things: Returning an
@@ -222,7 +214,7 @@ This example uses Django's :doc:`template system </topics/templates>`, which has
 several powerful features but strives to stay simple enough for non-programmers
 to use.
 
-Design your templates
+设计你的模板(templates)
 =====================
 
 The code above loads the ``news/year_archive.html`` template.
@@ -304,7 +296,7 @@ abstraction layer, you can read XML files, you can read files off disk, or
 anything you want. Each piece of Django -- models, views, templates -- is
 decoupled from the next.
 
-This is just the surface
+这仅仅是一点皮毛
 ========================
 
 This has been only a quick overview of Django's functionality. Some more useful
