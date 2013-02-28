@@ -187,7 +187,7 @@ Django 提供了一个丰富的框架可便利地创建表单及操作表单数�
 管理
 =========
 
-查找你所需要了解的有关自动管理界面的信息，这是Django最流行的特性之一:
+你需要了解所有有关自动管理界面的信息，这是Django最流行的特性之一:
 
 * :doc:`管理网站 <ref/contrib/admin/index>`
 * :doc:`管理操作 <ref/contrib/admin/actions>`
@@ -196,100 +196,93 @@ Django 提供了一个丰富的框架可便利地创建表单及操作表单数�
 安全
 ========
 
-Security is a topic of paramount importance in the development of Web
-applications and Django provides multiple protection tools and mechanisms:
+开发 Web 应用时安全是最重要一个的主题，Django提供了多重保护工具和机制:
 
-* :doc:`Security overview <topics/security>`
-* :doc:`Clickjacking protection <ref/clickjacking>`
-* :doc:`Cross Site Request Forgery protection <ref/contrib/csrf>`
-* :doc:`Cryptographic signing <topics/signing>`
+* :doc:`安全概述 <topics/security>`
+* :doc:`Clickjacking 防护 <ref/clickjacking>`
+* :doc:`跨站请求伪造防护 <ref/contrib/csrf>`
+* :doc:`加密签名 <topics/signing>`
 
 国际化和本地化
 =====================================
 
-Django offers a robust internationalization and localization framework to
-assist you in the development of applications for multiple languages and world
-regions:
+Django 提供了一个强大的国际化和本地化框架，以协助您开发支持多国语言和世界各地区的应用：
 
-* :doc:`Overview <topics/i18n/index>` |
-  :doc:`Internationalization <topics/i18n/translation>` |
-  :ref:`Localization <how-to-create-language-files>`
+* :doc:`概述 <topics/i18n/index>` |
+  :doc:`国际化 <topics/i18n/translation>` |
+  :ref:`本地化 <how-to-create-language-files>`
 * :doc:`"Local flavor" <ref/contrib/localflavor>`
-* :doc:`Time zones </topics/i18n/timezones>`
+* :doc:`时区 </topics/i18n/timezones>`
 
 Python的兼容性
 ====================
 
-Django aims to be compatible with multiple different flavors and versions of
-Python:
+Django 目标是兼容多个不同特性和版本的 Python:
 
-* :doc:`Jython support <howto/jython>`
-* :doc:`Python 3 compatibility <topics/python3>`
+* :doc:`Jython 支持 <howto/jython>`
+* :doc:`Python 3 兼容性 <topics/python3>`
 
 地理框架
 ====================
 
-:doc:`GeoDjango <ref/contrib/gis/index>` intends to be a world-class geographic
-Web framework. Its goal is to make it as easy as possible to build GIS Web
-applications and harness the power of spatially enabled data.
+:doc:`GeoDjango <ref/contrib/gis/index>` 打算做一个世界级的地理Web框架。
+它的目标是尽可能轻松的构建GIS Web应用和应用空间数据的能力。
 
 常用的web应用工具
 ============================
 
-Django offers multiple tools commonly needed in the development of Web
-applications:
+Django为开发 Web 应用的需要提供了多种常见的工具：
 
-* :doc:`Authentication <topics/auth/index>`
-* :doc:`Caching <topics/cache>`
-* :doc:`Logging <topics/logging>`
-* :doc:`Sending emails <topics/email>`
-* :doc:`Syndication feeds (RSS/Atom) <ref/contrib/syndication>`
-* :doc:`Comments <ref/contrib/comments/index>`, :doc:`comment moderation <ref/contrib/comments/moderation>` and :doc:`custom comments <ref/contrib/comments/custom>`
-* :doc:`Pagination <topics/pagination>`
-* :doc:`Messages framework <ref/contrib/messages>`
-* :doc:`Serialization <topics/serialization>`
+* :doc:`认证 <topics/auth/index>`
+* :doc:`缓存 <topics/cache>`
+* :doc:`日志 <topics/logging>`
+* :doc:`发送电子邮件 <topics/email>`
+* :doc:`聚合供稿(RSS/Atom) <ref/contrib/syndication>`
+* :doc:`评论 <ref/contrib/comments/index>`, :doc:`评论审核 <ref/contrib/comments/moderation>` and :doc:`自定义评论 <ref/contrib/comments/custom>`
+* :doc:`分页 <topics/pagination>`
+* :doc:`消息框架 <ref/contrib/messages>`
+* :doc:`序列化 <topics/serialization>`
 * :doc:`Sessions <topics/http/sessions>`
-* :doc:`Sitemaps <ref/contrib/sitemaps>`
-* :doc:`Static files management <ref/contrib/staticfiles>`
-* :doc:`Data validation <ref/validators>`
+* :doc:`站点地图 <ref/contrib/sitemaps>`
+* :doc:`静态文件管理 <ref/contrib/staticfiles>`
+* :doc:`数据验证 <ref/validators>`
 
 其他核心功能
 ==========================
 
-Learn about some other core functionalities of the Django framework:
+了解Django框架一些其他的核心功能：
 
-* :doc:`Conditional content processing <topics/conditional-view-processing>`
-* :doc:`Content types and generic relations <ref/contrib/contenttypes>`
-* :doc:`Databrowse <ref/contrib/databrowse>`
-* :doc:`Flatpages <ref/contrib/flatpages>`
-* :doc:`Redirects <ref/contrib/redirects>`
-* :doc:`Signals <topics/signals>`
-* :doc:`The sites framework <ref/contrib/sites>`
-* :doc:`Unicode in Django <ref/unicode>`
+* :doc:`按需处理内容 <topics/conditional-view-processing>`
+* :doc:`内容类型和泛型关系 <ref/contrib/contenttypes>`
+* :doc:`数据浏览 <ref/contrib/databrowse>`
+* :doc:`简单页面 <ref/contrib/flatpages>`
+* :doc:`重定向 <ref/contrib/redirects>`
+* :doc:`信号 <topics/signals>`
+* :doc:`sites框架 <ref/contrib/sites>`
+* :doc:`在 Django 中使用 Unicode <ref/unicode>`
 
 Django开源项目
 ==============================
 
-Learn about the development process for the Django project itself and about how
-you can contribute:
+了解 Django 项目本身的发展过程和你怎么做贡献：
 
-* **Community:**
-  :doc:`How to get involved <internals/contributing/index>` |
-  :doc:`The release process <internals/release-process>` |
-  :doc:`Team of committers <internals/committers>` |
-  :doc:`The Django source code repository <internals/git>` |
-  :doc:`Security policies <internals/security>`
+* **社区:**
+  :doc:`如何参与 <internals/contributing/index>` |
+  :doc:`发布过程 <internals/release-process>` |
+  :doc:`团队提交 <internals/committers>` |
+  :doc:`Django 源码库 <internals/git>` |
+  :doc:`安全策略 <internals/security>`
 
-* **Design philosophies:**
-  :doc:`Overview <misc/design-philosophies>`
+* **设计理念:**
+  :doc:`概述 <misc/design-philosophies>`
 
-* **Documentation:**
-  :doc:`About this documentation <internals/contributing/writing-documentation>`
+* **文档:**
+  :doc:`关于本文档 <internals/contributing/writing-documentation>`
 
-* **Third-party distributions:**
-  :doc:`Overview <misc/distributions>`
+* **第三方发行:**
+  :doc:`概述 <misc/distributions>`
 
-* **Django over time:**
-  :doc:`API stability <misc/api-stability>` |
-  :doc:`Release notes and upgrading instructions <releases/index>` |
-  :doc:`Deprecation Timeline <internals/deprecation>`
+* **Django 的过去:**
+  :doc:`API 稳定性 <misc/api-stability>` |
+  :doc:`发行说明和升级说明 <releases/index>` |
+  :doc:`功能弃用时间轴 <internals/deprecation>`
