@@ -35,7 +35,7 @@ Getting help
 初次接触Django或编程吗? 从这里开始吧!
 
 * **从零开始:**
-  :doc:`概览 <intro/overview>` |
+  :doc:`初探 <intro/overview>` |
   :doc:`安装 <intro/install>`
 
 * **新手教程:**
@@ -61,144 +61,137 @@ Django提供了一个抽象层(the "models"),对您的web应用中的数据进�
 
 * **查询集(QuerySets):**
   :doc:`执行查询 <topics/db/queries>` |
-  :doc:`QuerySet method reference <ref/models/querysets>`
+  :doc:`QuerySet 方法参考<ref/models/querysets>`
 
-* **Model instances:**
-  :doc:`Instance methods <ref/models/instances>` |
-  :doc:`Accessing related objects <ref/models/relations>`
+* **模型实例(Model instances):**
+  :doc:`Instance 方法 <ref/models/instances>` |
+  :doc:`访问关联对象 <ref/models/relations>`
 
-* **Advanced:**
-  :doc:`Managers <topics/db/managers>` |
-  :doc:`Raw SQL <topics/db/sql>` |
-  :doc:`Transactions <topics/db/transactions>` |
-  :doc:`Aggregation <topics/db/aggregation>` |
-  :doc:`Custom fields <howto/custom-model-fields>` |
-  :doc:`Multiple databases <topics/db/multi-db>`
+* **进阶:**
+  :doc:`管理器(Managers) <topics/db/managers>` |
+  :doc:`SQL 语句查询 <topics/db/sql>` |
+  :doc:`事务管理 <topics/db/transactions>` |
+  :doc:`数据处理 <topics/db/aggregation>` |
+  :doc:`自定义字段 <howto/custom-model-fields>` |
+  :doc:`多数据库 <topics/db/multi-db>`
 
-* **Other:**
-  :doc:`Supported databases <ref/databases>` |
-  :doc:`Legacy databases <howto/legacy-databases>` |
-  :doc:`Providing initial data <howto/initial-data>` |
-  :doc:`Optimize database access <topics/db/optimization>`
+* **其他:**
+  :doc:`支持的数据库 <ref/databases>` |
+  :doc:`遗留型旧数据库 <howto/legacy-databases>` |
+  :doc:`为模型提供初始数据 <howto/initial-data>` |
+  :doc:`优化数据库访问 <topics/db/optimization>`
 
 视图层(view)
 ==============
 
-Django has the concept of "views" to encapsulate the logic responsible for
-processing a user's request and for returning the response. Find all you need
-to know about views via the links below:
+Django 的视图是封装了处理用户的请求与返回响应的逻辑。通过以下链接来了解视图:
 
-* **The basics:**
-  :doc:`URLconfs <topics/http/urls>` |
-  :doc:`View functions <topics/http/views>` |
-  :doc:`Shortcuts <topics/http/shortcuts>` |
-  :doc:`Decorators <topics/http/decorators>`
+* **基础:**
+  :doc:`URL配置(URLconfs) <topics/http/urls>` |
+  :doc:`视图定义 <topics/http/views>` |
+  :doc:`快捷方法 <topics/http/shortcuts>` |
+  :doc:`装饰器 <topics/http/decorators>`
 
-* **Reference:**
-  :doc:`Request/response objects <ref/request-response>` |
-  :doc:`TemplateResponse objects <ref/template-response>`
+* **参考:**
+  :doc:`Request/response 对象 <ref/request-response>` |
+  :doc:`TemplateResponse 对象 <ref/template-response>`
 
-* **File uploads:**
-  :doc:`Overview <topics/http/file-uploads>` |
-  :doc:`File objects <ref/files/file>` |
-  :doc:`Storage API <ref/files/storage>` |
-  :doc:`Managing files <topics/files>` |
-  :doc:`Custom storage <howto/custom-file-storage>`
+* **文件上传:**
+  :doc:`概述 <topics/http/file-uploads>` |
+  :doc:`File 对象 <ref/files/file>` |
+  :doc:`存储 API <ref/files/storage>` |
+  :doc:`文件管理 <topics/files>` |
+  :doc:`自定义存储 <howto/custom-file-storage>`
 
-* **Class-based views:**
-  :doc:`Overview <topics/class-based-views/index>` |
-  :doc:`Built-in display views <topics/class-based-views/generic-display>` |
-  :doc:`Built-in editing views <topics/class-based-views/generic-editing>` |
-  :doc:`Using mixins <topics/class-based-views/mixins>` |
-  :doc:`API reference <ref/class-based-views/index>` |
-  :doc:`Flattened index<ref/class-based-views/flattened-index>`
+* **视图基类:**
+  :doc:`概述 <topics/class-based-views/index>` |
+  :doc:`内置显示视图 <topics/class-based-views/generic-display>` |
+  :doc:`内置编辑视图 <topics/class-based-views/generic-editing>` |
+  :doc:`混合使用 <topics/class-based-views/mixins>` |
+  :doc:`API 参考 <ref/class-based-views/index>` |
+  :doc:`分类索引 <ref/class-based-views/flattened-index>`
 
-* **Advanced:**
-  :doc:`Generating CSV <howto/outputting-csv>` |
-  :doc:`Generating PDF <howto/outputting-pdf>`
+* **进阶:**
+  :doc:`生成 CSV <howto/outputting-csv>` |
+  :doc:`生成 PDF <howto/outputting-pdf>`
 
-* **Middleware:**
-  :doc:`Overview <topics/http/middleware>` |
-  :doc:`Built-in middleware classes <ref/middleware>`
+* **中间件:**
+  :doc:`概述 <topics/http/middleware>` |
+  :doc:`内置中间件 <ref/middleware>`
 
 模板层(template)
 ==================
 
-The template layer provides a designer-friendly syntax for rendering the
-information to be presented to the user. Learn how this syntax can be used by
-designers and how it can be extended by programmers:
+模板层提供了设计友好的语法来展示信息给用户。了解语法可让设计师知道如何使用，让程序员知道如何扩展：
 
-* **For designers:**
-  :doc:`Syntax overview <topics/templates>` |
-  :doc:`Built-in tags and filters <ref/templates/builtins>` |
-  :doc:`Web design helpers <ref/contrib/webdesign>` |
-  :doc:`Humanization <ref/contrib/humanize>`
+* **For 设计师:**
+  :doc:`语法概述 <topics/templates>` |
+  :doc:`内置 tags 和 filters <ref/templates/builtins>` |
+  :doc:`Web 设计助手 <ref/contrib/webdesign>` |
+  :doc:`人性化 <ref/contrib/humanize>`
 
-* **For programmers:**
-  :doc:`Template API <ref/templates/api>` |
-  :doc:`Custom tags and filters <howto/custom-template-tags>`
+* **For 程序员:**
+  :doc:`模板 API <ref/templates/api>` |
+  :doc:`自定义 tags 和 filters <howto/custom-template-tags>`
 
 表单(Forms)
 ============
 
-Django provides a rich framework to facilitate the creation of forms and the
-manipulation of form data.
+Django 提供了一个丰富的框架可便利地创建表单及操作表单数据。
 
-* **The basics:**
-  :doc:`Overview <topics/forms/index>` |
-  :doc:`Form API <ref/forms/api>` |
-  :doc:`Built-in fields <ref/forms/fields>` |
-  :doc:`Built-in widgets <ref/forms/widgets>`
+* **基础:**
+  :doc:`概述 <topics/forms/index>` |
+  :doc:`表单 API <ref/forms/api>` |
+  :doc:`内置字段 <ref/forms/fields>` |
+  :doc:`内置小工具 <ref/forms/widgets>`
 
-* **Advanced:**
-  :doc:`Forms for models <topics/forms/modelforms>` |
-  :doc:`Integrating media <topics/forms/media>` |
-  :doc:`Formsets <topics/forms/formsets>` |
-  :doc:`Customizing validation <ref/forms/validation>`
+* **进阶:**
+  :doc:`模型表单 <topics/forms/modelforms>` |
+  :doc:`表单外观 <topics/forms/media>` |
+  :doc:`表单集 <topics/forms/formsets>` |
+  :doc:`自定义验证 <ref/forms/validation>`
 
-* **Extras:**
-  :doc:`Form preview <ref/contrib/formtools/form-preview>` |
-  :doc:`Form wizard <ref/contrib/formtools/form-wizard>`
+* **附加功能:**
+  :doc:`表单预览 <ref/contrib/formtools/form-preview>` |
+  :doc:`表单向导 <ref/contrib/formtools/form-wizard>`
 
-开发进程
+开发流程
 =======================
 
-Learn about the various components and tools to help you in the development and
-testing of Django applications:
+了解各种组件和工具来帮助你开发和测试Django应用：
 
-* **Settings:**
-  :doc:`Overview <topics/settings>` |
-  :doc:`Full list of settings <ref/settings>`
+* **设置:**
+  :doc:`概述 <topics/settings>` |
+  :doc:`全部设置列表 <ref/settings>`
 
-* **Exceptions:**
-  :doc:`Overview <ref/exceptions>`
+* **异常:**
+  :doc:`概述 <ref/exceptions>`
 
 * **django-admin.py and manage.py:**
-  :doc:`Overview <ref/django-admin>` |
-  :doc:`Adding custom commands <howto/custom-management-commands>`
+  :doc:`概述 <ref/django-admin>` |
+  :doc:`添加自定义命令 <howto/custom-management-commands>`
 
-* **Testing:**
-  :doc:`Introduction <topics/testing/index>` |
-  :doc:`Writing and running tests <topics/testing/overview>` |
-  :doc:`Advanced topics <topics/testing/advanced>` |
+* **测试:**
+  :doc:`介绍 <topics/testing/index>` |
+  :doc:`编写和运行测试 <topics/testing/overview>` |
+  :doc:`进阶主题 <topics/testing/advanced>` |
   :doc:`Doctests <topics/testing/doctests>`
 
-* **Deployment:**
-  :doc:`Overview <howto/deployment/index>` |
+* **部署:**
+  :doc:`概述 <howto/deployment/index>` |
   :doc:`WSGI servers <howto/deployment/wsgi/index>` |
   :doc:`FastCGI/SCGI/AJP <howto/deployment/fastcgi>` |
-  :doc:`Handling static files <howto/static-files>` |
-  :doc:`Tracking code errors by email <howto/error-reporting>`
+  :doc:`处理静态文件 <howto/static-files>` |
+  :doc:`通过电子邮件跟踪代码中的错误 <howto/error-reporting>`
 
 管理
 =========
 
-Find all you need to know about the automated admin interface, one of Django's
-most popular features:
+查找你所需要了解的有关自动管理界面的信息，这是Django最流行的特性之一:
 
-* :doc:`Admin site <ref/contrib/admin/index>`
-* :doc:`Admin actions <ref/contrib/admin/actions>`
-* :doc:`Admin documentation generator<ref/contrib/admin/admindocs>`
+* :doc:`管理网站 <ref/contrib/admin/index>`
+* :doc:`管理操作 <ref/contrib/admin/actions>`
+* :doc:`管理文档生成器 <ref/contrib/admin/admindocs>`
 
 安全
 ========
