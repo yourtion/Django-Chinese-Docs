@@ -195,7 +195,7 @@ would call the function ``news.views.article_detail(request,
 '2005', '05', '39323')``.
 
 编写你的视图(views)
-================
+=====================
 
 Each view is responsible for doing one of two things: Returning an
 :class:`~django.http.HttpResponse` object containing the content for the
@@ -215,7 +215,7 @@ several powerful features but strives to stay simple enough for non-programmers
 to use.
 
 设计你的模板(templates)
-=====================
+==========================
 
 The code above loads the ``news/year_archive.html`` template.
 
