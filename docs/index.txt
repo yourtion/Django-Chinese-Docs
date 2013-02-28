@@ -5,7 +5,7 @@
 Django 中文文档
 ====================
 
-.. rubric::  这里有你需要知道的有关Django的一切。
+.. rubric::  这里有你需要知道的有关 Django 的一切。
 
 Getting help
 ============  
@@ -21,7 +21,7 @@ Getting help
 
 * 在 `#django IRC channel`_ 上提问, 或者搜索 `IRC logs`_ 看下是否已经有人问过类似的问题。
 
-* 在我们的 `ticket tracker`_ 上报告Django的bug.
+* 在我们的 `ticket tracker`_ 上报告 Django 的 bug 。
 
 .. _archives of the django-users mailing list: http://groups.google.com/group/django-users/
 .. _post a question: http://groups.google.com/group/django-users/
@@ -32,7 +32,7 @@ Getting help
 新手入门
 ===========
 
-初次接触Django或编程吗? 从这里开始吧!
+初次接触 Django 或编程吗? 从这里开始吧!
 
 * **从零开始:**
   :doc:`初探 <intro/overview>` |
@@ -52,7 +52,7 @@ Getting help
 模型层(model)
 ===============
 
-Django提供了一个抽象层(the "models"),对您的web应用中的数据进行构建及操纵。通过以下内容来了解更多:
+Django 提供了一个抽象层(the "models"),对您的 web 应用中的数据进行构建及操纵。通过以下内容来了解更多:
 
 * **模型(Models):**
   :doc:`模型语法 <topics/db/models>` |
@@ -158,7 +158,7 @@ Django 提供了一个丰富的框架可便利地创建表单及操作表单数�
 开发流程
 =======================
 
-了解各种组件和工具来帮助你开发和测试Django应用：
+了解各种组件和工具来帮助你开发和测试 Django 应用：
 
 * **设置:**
   :doc:`概述 <topics/settings>` |
@@ -167,7 +167,7 @@ Django 提供了一个丰富的框架可便利地创建表单及操作表单数�
 * **异常:**
   :doc:`概述 <ref/exceptions>`
 
-* **django-admin.py and manage.py:**
+* **django-admin.py 和 manage.py:**
   :doc:`概述 <ref/django-admin>` |
   :doc:`添加自定义命令 <howto/custom-management-commands>`
 
@@ -187,7 +187,7 @@ Django 提供了一个丰富的框架可便利地创建表单及操作表单数�
 管理
 =========
 
-你需要了解所有有关自动管理界面的信息，这是Django最流行的特性之一:
+你需要了解所有有关自动管理界面的信息，这是 Django 最流行的特性之一:
 
 * :doc:`管理网站 <ref/contrib/admin/index>`
 * :doc:`管理操作 <ref/contrib/admin/actions>`
@@ -196,7 +196,7 @@ Django 提供了一个丰富的框架可便利地创建表单及操作表单数�
 安全
 ========
 
-开发 Web 应用时安全是最重要一个的主题，Django提供了多重保护工具和机制:
+开发 Web 应用时安全是最重要一个的主题，Django 提供了多重保护工具和机制:
 
 * :doc:`安全概述 <topics/security>`
 * :doc:`Clickjacking 防护 <ref/clickjacking>`
@@ -225,20 +225,20 @@ Django 目标是兼容多个不同特性和版本的 Python:
 地理框架
 ====================
 
-:doc:`GeoDjango <ref/contrib/gis/index>` 打算做一个世界级的地理Web框架。
-它的目标是尽可能轻松的构建GIS Web应用和应用空间数据的能力。
+:doc:`GeoDjango <ref/contrib/gis/index>` 打算做一个世界级的地理 Web 框架。
+它的目标是尽可能轻松的构建 GIS Web 应用和应用空间数据的能力。
 
 常用的web应用工具
 ============================
 
-Django为开发 Web 应用的需要提供了多种常见的工具：
+Django 为开发 Web 应用的需要提供了多种常见的工具：
 
 * :doc:`认证 <topics/auth/index>`
 * :doc:`缓存 <topics/cache>`
 * :doc:`日志 <topics/logging>`
 * :doc:`发送电子邮件 <topics/email>`
 * :doc:`聚合供稿(RSS/Atom) <ref/contrib/syndication>`
-* :doc:`评论 <ref/contrib/comments/index>`, :doc:`评论审核 <ref/contrib/comments/moderation>` and :doc:`自定义评论 <ref/contrib/comments/custom>`
+* :doc:`评论 <ref/contrib/comments/index>`, :doc:`评论审核 <ref/contrib/comments/moderation>` 和 :doc:`自定义评论 <ref/contrib/comments/custom>`
 * :doc:`分页 <topics/pagination>`
 * :doc:`消息框架 <ref/contrib/messages>`
 * :doc:`序列化 <topics/serialization>`
@@ -250,7 +250,7 @@ Django为开发 Web 应用的需要提供了多种常见的工具：
 其他核心功能
 ==========================
 
-了解Django框架一些其他的核心功能：
+了解 Django 框架一些其他的核心功能：
 
 * :doc:`按需处理内容 <topics/conditional-view-processing>`
 * :doc:`内容类型和泛型关系 <ref/contrib/contenttypes>`
@@ -258,10 +258,10 @@ Django为开发 Web 应用的需要提供了多种常见的工具：
 * :doc:`简单页面 <ref/contrib/flatpages>`
 * :doc:`重定向 <ref/contrib/redirects>`
 * :doc:`信号 <topics/signals>`
-* :doc:`sites框架 <ref/contrib/sites>`
+* :doc:`sites 框架 <ref/contrib/sites>`
 * :doc:`在 Django 中使用 Unicode <ref/unicode>`
 
-Django开源项目
+Django 开源项目
 ==============================
 
 了解 Django 项目本身的发展过程和你怎么做贡献：
