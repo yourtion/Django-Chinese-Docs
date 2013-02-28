@@ -12,7 +12,7 @@ Django 文档目录
 .. toctree::
     :maxdepth: 3
 
-    新手入门 <intro/index>
+    intro/index
     topics/index
     howto/index
     faq/index
