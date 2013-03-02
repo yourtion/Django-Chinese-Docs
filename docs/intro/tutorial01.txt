@@ -2,79 +2,59 @@
 编写你的第一个 Django 程序 第1部分
 =====================================
 
-Let's learn by example.
+让我们通过例子来学习。
 
-Throughout this tutorial, we'll walk you through the creation of a basic
-poll application.
+在本教程中，我们将引导您创建一个基本的投票应用。
 
-It'll consist of two parts:
+它将包含两部分：
 
-* A public site that lets people view polls and vote in them.
-* An admin site that lets you add, change and delete polls.
+* 一个公共网站，可让人们查看投票的结果和让他们进行投票。
+* 一个管理网站，可让你添加、修改和删除投票项目。
 
-We'll assume you have :doc:`Django installed </intro/install>` already. You can
-tell Django is installed and which version by running the following command:
+我们假设你已经 :doc:`安装了 Django </intro/install>` 。你可以运行以下命令来验证是否已经安装了 Django 和运行着的版本号：
 
 .. code-block:: bash
 
     python -c "import django; print(django.get_version())"
 
-You should see either the version of your Django installation or an error
-telling "No module named django". Check also that the version number matches
-the version of this tutorial. If they don't match, you can refer to the
-tutorial for your version of Django or update Django to the newest version.
+你应该看到你安装的 Django 版本或一个提示你 "No module named django" 的错误。此外，还应该检查下你的版本与本教程的版本是否一致。
+若不一致，你可以参考 Django 版本对应的教程或者更新 Django 到最新版本。
 
-See :doc:`How to install Django </topics/install>` for advice on how to remove
-older versions of Django and install a newer one.
+请参考 :doc:`如何安装 Django </topics/install>` 中的意见先删除旧版本的 Django 再安装一个新的。
 
-.. admonition:: Where to get help:
+.. admonition:: 在哪里可以获得帮助：
 
-    If you're having trouble going through this tutorial, please post a message
-    to `django-users`__ or drop by `#django on irc.freenode.net`__ to chat
-    with other Django users who might be able to help.
+    如果您在学习本教程中遇到问题，请在 `django-users`__  上发贴或者在 `#django on irc.freenode.net`__ 上与其他可能会帮助您的 Django 用户交流。
 
 __ http://groups.google.com/group/django-users
 __ irc://irc.freenode.net/django
 
-Creating a project
+创建一个项目
 ==================
 
-If this is your first time using Django, you'll have to take care of some
-initial setup. Namely, you'll need to auto-generate some code that establishes a
-Django :term:`project` -- a collection of settings for an instance of Django,
-including database configuration, Django-specific options and
-application-specific settings.
+如果这是你第一次使用 Django
+，那么你必须进行一些初始设置。也就是通过自动生成代码来建立一个 Django 项目
+:term:`project` -- 一个 Django 项目的设置集，包含了数据库配置、 Django 详细选项设置和应用特性配置。
 
-From the command line, ``cd`` into a directory where you'd like to store your
-code, then run the following command:
+在命令行中，使用 ``cd`` 命令进入你想存储代码所在的目录，然后运行以下命令：
 
 .. code-block:: bash
 
    django-admin.py startproject mysite
 
-This will create a ``mysite`` directory in your current directory. If it didn't
-work, see :ref:`troubleshooting-django-admin-py`.
+这将在当前目录创建一个 ``mysite`` 目录。如果失败了，请查看 :ref:`troubleshooting-django-admin-py`.
 
 .. note::
 
-    You'll need to avoid naming projects after built-in Python or Django
-    components. In particular, this means you should avoid using names like
-    ``django`` (which will conflict with Django itself) or ``test`` (which
-    conflicts with a built-in Python package).
+    你需要避免使用 python 保留字或 Django 组件名作为项目的名称。尤其是你应该避免使用的命名如： ``django`` (与 Django 本身会冲突) 或者 ``test`` (与 Python 内置的包名会冲突).
 
-.. admonition:: Where should this code live?
+.. admonition:: 这段代码应该放在哪里？
 
-    If your background is in plain old PHP (with no use of modern frameworks),
-    you're probably used to putting code under the Web server's document root
-    (in a place such as ``/var/www``). With Django, you don't do that. It's
-    not a good idea to put any of this Python code within your Web server's
-    document root, because it risks the possibility that people may be able
-    to view your code over the Web. That's not good for security.
+    如果你有一般 PHP 的编程背景（未使用流行的框架），可能会将你的代码放在 Web 服务器的文档根目录下（例如：``/var/www``）。而在 Django 中，你不必这么做。将任何 Python 代码放在你的 Web 服务器文档根目录不会是一个好主意，因为这可能会增加人们通过 Web 方式查看到你的代码的风险。这不利于安全。
 
-    Put your code in some directory **outside** of the document root, such as
-    :file:`/home/mycode`.
+    将你的代码放在你的文档根目录 **以外** 的某些目录, 例如 :file:`/home/mycode` 。
 
-Let's look at what :djadmin:`startproject` created::
+让我们来看看 :djadmin:`startproject` 都创建了些什么::
 
     mysite/
         manage.py
@@ -84,50 +64,32 @@ Let's look at what :djadmin:`startproject` created::
             urls.py
             wsgi.py
 
-.. admonition:: Doesn't match what you see?
+.. admonition:: 和你看到的不一样？
 
-    The default project layout recently changed. If you're seeing a "flat"
-    layout (with no inner :file:`mysite/` directory), you're probably using
-    a version of Django that doesn't match this tutorial version.  You'll
-    want to either switch to the older tutorial or the newer Django version.
+    默认的项目布局最近刚刚改变过。如果你看到的是一个“扁平”结构的目录布局（没有内层 :file:`mysite/` 目录），你很可能正在使用一个和本教程版本不一致的 Django 版本。你需要切换到对应的旧版教程或者使用较新的 Django 版本。
 
-These files are:
+这些文件是：
 
-* The outer :file:`mysite/` directory is just a container for your
-  project. Its name doesn't matter to Django; you can rename it to anything
-  you like.
+* 外层 :file:`mysite/` 目录只是你项目的一个容器。对于 Django 来说该目录名并不重要; 你可以重命名为你喜欢的。
 
-* :file:`manage.py`: A command-line utility that lets you interact with this
-  Django project in various ways. You can read all the details about
-  :file:`manage.py` in :doc:`/ref/django-admin`.
+* :file:`manage.py`: 一个实用的命令行工具，可让你以各种方式与该 Django 项目进行交互。 你可以在 :doc:`/ref/django-admin` 中查看关于 :file:`manage.py` 所有的细节。
 
-* The inner :file:`mysite/` directory is the actual Python package for your
-  project. Its name is the Python package name you'll need to use to import
-  anything inside it (e.g. ``import mysite.settings``).
+* 内层 :file:`mysite/` 目录是你项目中的实际 Python 包。该目录名就是 Python 包名，通过它你可以导入它里面的任何东西。 (e.g. ``import mysite.settings``).
 
-* :file:`mysite/__init__.py`: An empty file that tells Python that this
-  directory should be considered a Python package. (Read `more about
-  packages`_ in the official Python docs if you're a Python beginner.)
+* :file:`mysite/__init__.py`: 一个空文件，告诉 Python 该目录是一个 Python 包。(如果你是 Python 新手，请查看官方文档了解 `关于包的更多内容`_ 。)
 
-* :file:`mysite/settings.py`: Settings/configuration for this Django
-  project.  :doc:`/topics/settings` will tell you all about how settings
-  work.
+* :file:`mysite/settings.py`: 该 Django 项目的设置/配置。请查看 :doc:`/topics/settings` 将会告诉你如何设置。
 
-* :file:`mysite/urls.py`: The URL declarations for this Django project; a
-  "table of contents" of your Django-powered site. You can read more about
-  URLs in :doc:`/topics/http/urls`.
+* :file:`mysite/urls.py`: 该 Django 项目的 URL 声明; 一份由 Django 驱动的网站“目录”。请查看 :doc:`/topics/http/urls` 可以获取更多有关 URL 的信息。
 
-* :file:`mysite/wsgi.py`: An entry-point for WSGI-compatible webservers to
-  serve your project. See :doc:`/howto/deployment/wsgi/index` for more details.
+* :file:`mysite/wsgi.py`: 一个 WSGI 兼容的 Web 服务器的入口，以便运行你的项目。请查看 :doc:`/howto/deployment/wsgi/index` 获取更多细节。
 
-.. _more about packages: http://docs.python.org/tutorial/modules.html#packages
+.. _关于包的更多内容: http://docs.python.org/tutorial/modules.html#packages
 
-The development server
+开发用服务器
 ----------------------
 
-Let's verify this worked. Change into the outer :file:`mysite` directory, if
-you haven't already, and run the command ``python manage.py runserver``. You'll
-see the following output on the command line:
+让我们来验证是否工作。从外层 :file:`mysite` 目录切换进去，若准备好了就运行命令 ``python manage.py runserver``。你将会看到命令行输出如下内容：
 
 .. parsed-literal::
 
@@ -139,144 +101,94 @@ see the following output on the command line:
     Development server is running at http://127.0.0.1:8000/
     Quit the server with CONTROL-C.
 
-You've started the Django development server, a lightweight Web server written
-purely in Python. We've included this with Django so you can develop things
-rapidly, without having to deal with configuring a production server -- such as
-Apache -- until you're ready for production.
+你已经启动了 Django 开发服务器，一个纯粹的由 Python 编写的轻量级 Web 服务器。我们在 Django 内包含了这个服务器，这样你就可以迅速开发了，在产品投入使用之前不必去配置一台生产环境下的服务器 -- 例如 Apache 。
 
-Now's a good time to note: **Don't** use this server in anything resembling a
-production environment. It's intended only for use while developing. (We're in
-the business of making Web frameworks, not Web servers.)
+现在是一个很好的提示时机：**不要** 在任何类似生产环境中使用此服务器。它仅适用于开发环境。(我们提供的是 Web 框架的业务，而不是 Web 服务器。)
 
-Now that the server's running, visit http://127.0.0.1:8000/ with your Web
-browser. You'll see a "Welcome to Django" page, in pleasant, light-blue pastel.
-It worked!
+现在服务器正在运行中，请在你的 Web 浏览器中访问 http://127.0.0.1:8000/ 。
+你会看到一个令人愉悦的，柔和的淡蓝色 "Welcome to Django" 页面。它工作正常！
 
-.. admonition:: Changing the port
+.. admonition:: 更改端口号
 
-    By default, the :djadmin:`runserver` command starts the development server
-    on the internal IP at port 8000.
+    默认情况下，:djadmin:`runserver` 命令启动的开发服务器只监听本地 IP 的 8000 端口。
 
-    If you want to change the server's port, pass
-    it as a command-line argument. For instance, this command starts the server
-    on port 8080:
+    如果你想改变服务器的端口，把它作为一个命令行参数传递即可。例如以下命令启动的服务器将监听 8080 端口：
 
     .. code-block:: bash
 
         python manage.py runserver 8080
 
-    If you want to change the server's IP, pass it along with the port. So to
-    listen on all public IPs (useful if you want to show off your work on other
-    computers), use:
+    如果你想改变服务器 IP ，把它和端口号一起传递即可。因此，要监听所有公共 IP 地址（如果你想在其他电脑上炫耀你的工作），请使用：
 
     .. code-block:: bash
 
         python manage.py runserver 0.0.0.0:8000
 
-    Full docs for the development server can be found in the
-    :djadmin:`runserver` reference.
+    有关开发服务器的完整文档可以在 :djadmin:`runserver` 内参考。
 
-Database setup
+数据库设置
 --------------
 
-Now, edit :file:`mysite/settings.py`. It's a normal Python module with
-module-level variables representing Django settings. Change the
-following keys in the :setting:`DATABASES` ``'default'`` item to match
-your database connection settings.
+现在，编辑 :file:`mysite/settings.py` 。 这是一个普通的 Python 模块，包含了代表 Django 设置的模块级变量。
+更改 :setting:`DATABASES` 中  ``'default'`` 下的以下键的值，以匹配您的数据库连接设置。
 
-* :setting:`ENGINE <DATABASE-ENGINE>` -- Either
+* :setting:`ENGINE <DATABASE-ENGINE>` -- 从
   ``'django.db.backends.postgresql_psycopg2'``,
-  ``'django.db.backends.mysql'``, ``'django.db.backends.sqlite3'`` or
-  ``'django.db.backends.oracle'``. Other backends are :setting:`also available
+  ``'django.db.backends.mysql'``, ``'django.db.backends.sqlite3'``,
+  ``'django.db.backends.oracle'`` 中选一个， 至于其他请查看 :setting:`also available
   <DATABASE-ENGINE>`.
 
-* :setting:`NAME` -- The name of your database. If you're using
-  SQLite, the database will be a file on your computer; in that
-  case, :setting:`NAME` should be the full absolute path,
-  including filename, of that file. If the file doesn't exist, it
-  will automatically be created when you synchronize the database
-  for the first time (see below).
+* :setting:`NAME` -- 你的数据库名。如果你使用 SQLite，该数据库将是你计算机上的一个文件；在这种情况下，:setting:`NAME` 将是一个完整的绝对路径，而且还包含该文件的名称。如果该文件不存在，它会在第一次同步数据库时自动创建（见下文）。
 
-  When specifying the path, always use forward slashes, even on
-  Windows (e.g. ``C:/homes/user/mysite/sqlite3.db``).
+  当指定路径时，总是使用正斜杠，即使是在 Windows 下(例如：``C:/homes/user/mysite/sqlite3.db``) 。
 
-* :setting:`USER` -- Your database username (not used for SQLite).
+* :setting:`USER` -- 你的数据库用户名 ( SQLite 下不需要) 。
 
-* :setting:`PASSWORD` -- Your database password (not used for
-  SQLite).
+* :setting:`PASSWORD` -- 你的数据库密码 ( SQLite 下不需要) 。
 
-* :setting:`HOST` -- The host your database is on. Leave this as
-  an empty string (or possibly ``127.0.0.1``) if your database server is on the
-  same physical machine (not used for SQLite). See :setting:`HOST` for details.
+* :setting:`HOST` -- 你的数据库主机地址。如果和你的数据库服务器是同一台物理机器，请将此处保留为空 (或者设置为 ``127.0.0.1``) ( SQLite 下不需要) 。查看 :setting:`HOST` 了解详细信息。
 
-If you're new to databases, we recommend simply using SQLite by setting
-:setting:`ENGINE <DATABASE-ENGINE>` to ``'django.db.backends.sqlite3'`` and
-:setting:`NAME` to the place where you'd like to store the database. SQLite is
-included in Python, so you won't need to install anything else to support your
-database.
+如果你是新建数据库，我们建议只使用 SQLite ，将 :setting:`ENGINE <DATABASE-ENGINE>` 改为 ``'django.db.backends.sqlite3'`` 并且将 :setting:`NAME` 设置为你想存放数据库的地方。 SQLite 是内置在 Python 中的，因此你不需要安装任何东西来支持你的数据库。
 
 .. note::
 
-    If you're using PostgreSQL or MySQL, make sure you've created a database by
-    this point. Do that with "``CREATE DATABASE database_name;``" within your
-    database's interactive prompt.
+    如果你使用 PostgreSQL 或者 MySQL，确保你已经创建了一个数据库。还是通过你的数据库交互接口中的 "``CREATE DATABASE database_name;``" 命令做到这一点的。
 
-    If you're using SQLite, you don't need to create anything beforehand - the
-    database file will be created automatically when it is needed.
+    如果你使用 SQLite ，你不需要事先创建任何东西 - 在需要的时候，将会自动创建数据库文件。
 
-While you're editing :file:`settings.py`, set :setting:`TIME_ZONE` to your
-time zone. The default value is the Central time zone in the U.S. (Chicago).
+当你编辑 :file:`settings.py` 时，将 :setting:`TIME_ZONE` 修改为你所在的时区。默认值是美国中央时区（芝加哥）。
 
-Also, note the :setting:`INSTALLED_APPS` setting toward the bottom of
-the file. That holds the names of all Django applications that are
-activated in this Django instance. Apps can be used in multiple projects, and
-you can package and distribute them for use by others in their projects.
+同时，注意文件底部的 :setting:`INSTALLED_APPS` 设置。它保存了当前 Django 实例已激活的所有 Django 应用。每个应用可以被多个项目使用，而且你可以打包和分发给其他人在他们的项目中使用。
 
-By default, :setting:`INSTALLED_APPS` contains the following apps, all of which
-come with Django:
+默认情况下，:setting:`INSTALLED_APPS` 包含以下应用，这些都是由 Django 提供的：
 
-* :mod:`django.contrib.auth` -- An authentication system.
+* :mod:`django.contrib.auth` -- 身份验证系统。
 
-* :mod:`django.contrib.contenttypes` -- A framework for content types.
+* :mod:`django.contrib.contenttypes` -- 内容类型框架。
 
-* :mod:`django.contrib.sessions` -- A session framework.
+* :mod:`django.contrib.sessions` --  session 框架。
 
-* :mod:`django.contrib.sites` -- A framework for managing multiple sites
-  with one Django installation.
+* :mod:`django.contrib.sites` -- 网站管理框架。
 
-* :mod:`django.contrib.messages` -- A messaging framework.
+* :mod:`django.contrib.messages` -- 消息框架。
 
-* :mod:`django.contrib.staticfiles` -- A framework for managing
-  static files.
+* :mod:`django.contrib.staticfiles` -- 静态文件管理框架。
 
-These applications are included by default as a convenience for the common case.
+这些应用在一般情况下是默认包含的。
 
-Each of these applications makes use of at least one database table, though,
-so we need to create the tables in the database before we can use them. To do
-that, run the following command:
+所有这些应用中每个应用至少使用一个数据库表，所以在使用它们之前我们需要创建数据库中的表。要做到这一点，请运行以下命令：
 
 .. code-block:: bash
 
     python manage.py syncdb
 
-The :djadmin:`syncdb` command looks at the :setting:`INSTALLED_APPS` setting and
-creates any necessary database tables according to the database settings in your
-:file:`settings.py` file. You'll see a message for each database table it
-creates, and you'll get a prompt asking you if you'd like to create a superuser
-account for the authentication system. Go ahead and do that.
+:djadmin:`syncdb` 命令参照 :setting:`INSTALLED_APPS` 设置，并在你的 :file:`settings.py` 文件所配置的数据库中创建必要的数据库表。每创建一个数据库表你都会看到一条消息，接着你会看到一个提示询问你是否想要在身份验证系统内创建个超级用户。按提示输入后结束。
 
-If you're interested, run the command-line client for your database and type
-``\dt`` (PostgreSQL), ``SHOW TABLES;`` (MySQL), or ``.schema`` (SQLite) to
-display the tables Django created.
+如果你感兴趣，可以在你的数据库命令行下输入：``\dt`` (PostgreSQL), ``SHOW TABLES;`` (MySQL), 或 ``.schema`` (SQLite) 来列出 Django 所创建的表。
 
-.. admonition:: For the minimalists
+.. admonition:: 对于极简主义者
 
-    Like we said above, the default applications are included for the common
-    case, but not everybody needs them. If you don't need any or all of them,
-    feel free to comment-out or delete the appropriate line(s) from
-    :setting:`INSTALLED_APPS` before running :djadmin:`syncdb`. The
-    :djadmin:`syncdb` command will only create tables for apps in
-    :setting:`INSTALLED_APPS`.
+    就像我们上面所说的，一般情况下以上应用都默认包含在内，但不是每个人都需要它们。如果不需要某些或全部应用，在运行 :djadmin:`syncdb` 命令前可从 :setting:`INSTALLED_APPS` 内随意注释或删除相应的行。:djadmin:`syncdb` 命令只会为 :setting:`INSTALLED_APPS` 内的应用创建表。
 
 .. _creating-models:
 
