@@ -6,8 +6,8 @@
 安装 Python
 --------------
 
-作为一个 Web 框架，Django 需要使用 Python 。它适用2.6.5到2.7的所有 Python
-版本。它还具有3.2和3.3版本的实验性支持。所有这些 Python
+作为一个 Web 框架，Django 需要使用 Python 。它适用 2.6.5 到 2.7 的所有 Python
+版本。它还具有 3.2 和 3.3 版本的实验性支持。所有这些 Python
 版本都包含一个轻量级的数据库名叫 SQLite_ 。因此你现在还不需要建立一个数据库。
 
 .. _sqlite: http://sqlite.org/
@@ -16,7 +16,7 @@
 
 .. admonition:: 在 Jython 使用 Django
 
-    如果你使用 Jython_ (一个在 Java 平台上实现的 Python )，你需要遵循一些额外的步骤。查看 :doc:`/howto/jython` 获取详细信息。
+    如果你使用 Jython_ (一个在 Java 平台上实现的 Python )，你需要遵循一些额外的步骤。查看 :doc:`在 Jyton 上运行 Python </howto/jython>` 获取详细信息。
 
 .. _jython: http://www.jython.org/
 
@@ -31,12 +31,12 @@
 -----------------
 
 若你需要一个“大”数据库引擎，例如：PostgreSQL ，MySQL ，或 Oracle ，那此步骤是需要的。
-要安装这样一个数据库，请参考 :ref:`数据库安装信息 <database-installation>`.
+想要安装这样一个数据库，请参考 :ref:`数据库安装信息 <database-installation>`.
 
 删除旧版本的 Django
 ----------------------
 
-如果你是从旧版本的 Django 升级安装，你将需要 :ref:`在安装新版本之前卸载旧版本的 Django <removing-old-versions-of-django>`.
+如果你是从旧版本的 Django 升级安装，你将需要 :ref:`在安装新版本之前先卸载旧版本的 Django <removing-old-versions-of-django>`.
 
 安装 Django
 --------------
