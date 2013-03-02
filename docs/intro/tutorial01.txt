@@ -186,43 +186,33 @@ __ irc://irc.freenode.net/django
 
 如果你感兴趣，可以在你的数据库命令行下输入：``\dt`` (PostgreSQL), ``SHOW TABLES;`` (MySQL), 或 ``.schema`` (SQLite) 来列出 Django 所创建的表。
 
-.. admonition:: 对于极简主义者
+.. admonition:: 极简主义者
 
     就像我们上面所说的，一般情况下以上应用都默认包含在内，但不是每个人都需要它们。如果不需要某些或全部应用，在运行 :djadmin:`syncdb` 命令前可从 :setting:`INSTALLED_APPS` 内随意注释或删除相应的行。:djadmin:`syncdb` 命令只会为 :setting:`INSTALLED_APPS` 内的应用创建表。
 
 .. _creating-models:
 
-Creating models
+创建模型
 ===============
 
-Now that your environment -- a "project" -- is set up, you're set to start
-doing work.
+现在你的项目开发环境建立好了， 你可以开工了。
 
-Each application you write in Django consists of a Python package, somewhere
-on your `Python path`_, that follows a certain convention. Django comes with a
-utility that automatically generates the basic directory structure of an app,
-so you can focus on writing code rather than creating directories.
+你通过 Djaong 编写的每个应用都是由 Python 包组成的，这些包存放在你的 `Python path`_ 中并且遵循一定的命名规范。 Django 提供了个实用工具可以自动生成一个应用的基本目录架构，因此你可以专注于编写代码而不是去创建目录。
 
-.. admonition:: Projects vs. apps
+.. admonition:: 项目 ( Projects ) vs. 应用 ( apps )
+	
+    项目与应用之间有什么不同之处？应用是一个提供功能的 Web 应用 -- 例如：一个博客系统、一个公共记录的数据库或者一个简单的投票系统。项目是针对一个特定的
+Web 网站相关的配置和其应用的组合。一个项目可以包含多个应用。一个应用可以在多个项目中使用。
 
-    What's the difference between a project and an app? An app is a Web
-    application that does something -- e.g., a Weblog system, a database of
-    public records or a simple poll app. A project is a collection of
-    configuration and apps for a particular Web site. A project can contain
-    multiple apps. An app can be in multiple projects.
+你的应用可以存放在 `Python path`_ 中的任何位置。在本教材中，我们将通过你的 :file:`manage.py` 文件创建我们的投票应用，以便它可以作为顶层模块导入，而不是作为 ``mysite`` 的子模块。
 
-Your apps can live anywhere on your `Python path`_. In this tutorial, we'll
-create our poll app right next to your :file:`manage.py` file so that it can be
-imported as its own top-level module, rather than a submodule of ``mysite``.
-
-To create your app, make sure you're in the same directory as :file:`manage.py`
-and type this command:
+要创建你的应用，请确认与 :file:`manage.py` 文件在同一的目录下并输入以下命令：
 
 .. code-block:: bash
 
     python manage.py startapp polls
 
-That'll create a directory :file:`polls`, which is laid out like this::
+这将创建一个 :file:`polls` 目录，其展开的样子如下所示：::
 
     polls/
         __init__.py
@@ -230,12 +220,11 @@ That'll create a directory :file:`polls`, which is laid out like this::
         tests.py
         views.py
 
-This directory structure will house the poll application.
+此目录结构就是投票应用。
 
-The first step in writing a database Web app in Django is to define your models
--- essentially, your database layout, with additional metadata.
+在 Django 中编写一个有数据库支持的 Web 应用的第一步就是定义你的模型 -- 从本质上讲就是数据库设计及其附加的元数据。
 
-.. admonition:: Philosophy
+.. admonition:: 原理
 
    A model is the single, definitive source of data about your data. It contains
    the essential fields and behaviors of the data you're storing. Django follows
