@@ -201,8 +201,8 @@ __ irc://irc.freenode.net/django
 
 .. admonition:: 项目 ( Projects ) vs. 应用 ( apps )
 	
-    项目与应用之间有什么不同之处？应用是一个提供功能的 Web 应用 -- 例如：一个博客系统、一个公共记录的数据库或者一个简单的投票系统。项目是针对一个特定的
-Web 网站相关的配置和其应用的组合。一个项目可以包含多个应用。一个应用可以在多个项目中使用。
+    项目与应用之间有什么不同之处？应用是一个提供功能的 Web 应用 -- 例如：一个博客系统、一个公共记录的数据库或者一个简单的投票系统。
+    项目是针对一个特定的 Web 网站相关的配置和其应用的组合。一个项目可以包含多个应用。一个应用可以在多个项目中使用。
 
 你的应用可以存放在 `Python path`_ 中的任何位置。在本教材中，我们将通过你的 :file:`manage.py` 文件创建我们的投票应用，以便它可以作为顶层模块导入，而不是作为 ``mysite`` 的子模块。
 
@@ -224,20 +224,15 @@ Web 网站相关的配置和其应用的组合。一个项目可以包含多个�
 
 在 Django 中编写一个有数据库支持的 Web 应用的第一步就是定义你的模型 -- 从本质上讲就是数据库设计及其附加的元数据。
 
-.. admonition:: 原理
+.. admonition:: 哲理
 
-   A model is the single, definitive source of data about your data. It contains
-   the essential fields and behaviors of the data you're storing. Django follows
-   the :ref:`DRY Principle <dry>`. The goal is to define your data model in one
-   place and automatically derive things from it.
+   模型是有关你数据的唯一且明确的数据源。它包含了你所要存储的数据的基本字段和行为。
+   Django 遵循 :ref:`DRY 原则 <dry>` 。目标是为了只在一个地方定义你的数据模型就可从中自动获取数据。
 
-In our simple poll app, we'll create two models: ``Poll`` and ``Choice``.
-A ``Poll`` has a question and a publication date. A ``Choice`` has two fields:
-the text of the choice and a vote tally. Each ``Choice`` is associated with a
-``Poll``.
+在这简单的投票应用中，我们将创建两个模型： ``Poll`` 和 ``Choice``。``Poll`` 有问题和发布日期两个字段。``Choice`` 有两个字段： 选项 ( choice )
+的文本内容和投票数。每一个 ``Choice`` 都与一个 ``Poll`` 关联。
 
-These concepts are represented by simple Python classes. Edit the
-:file:`polls/models.py` file so it looks like this::
+这些概念都由简单的 Python 类来表现。编辑 :file:`polls/models.py` 文件后如下所示： ::
 
     from django.db import models
 
@@ -250,40 +245,31 @@ These concepts are represented by simple Python classes. Edit the
         choice_text = models.CharField(max_length=200)
         votes = models.IntegerField(default=0)
 
-The code is straightforward. Each model is represented by a class that
-subclasses :class:`django.db.models.Model`. Each model has a number of class
-variables, each of which represents a database field in the model.
+代码很简单。每个模型都由继承自 :class:`django.db.models.Model` 子类的类来描述。 每个模型都有一些类变量，每一个类变量都代表了一个数据库字段。
 
-Each field is represented by an instance of a :class:`~django.db.models.Field`
-class -- e.g., :class:`~django.db.models.CharField` for character fields and
-:class:`~django.db.models.DateTimeField` for datetimes. This tells Django what
-type of data each field holds.
+每个字段由一个 :class:`~django.db.models.Field` 的实例来表现 -- 比如 :class:`~django.db.models.CharField` 表示字符类型的字段和 :class:`~django.db.models.DateTimeField` 表示日期时间型的字段。这会告诉 Django 每个字段都保存了什么类型的数据。
 
-The name of each :class:`~django.db.models.Field` instance (e.g. ``question`` or
-``pub_date`` ) is the field's name, in machine-friendly format. You'll use this
-value in your Python code, and your database will use it as the column name.
+每一个 :class:`~django.db.models.Field` 实例的名字就是字段的名字（如：
+``question`` 或者 ``pub_date`` ），其格式属于亲和机器式的。在你的 Python
+的代码中会使用这个值，而你的数据库会将这个值作为表的列名。
 
-You can use an optional first positional argument to a
-:class:`~django.db.models.Field` to designate a human-readable name. That's used
-in a couple of introspective parts of Django, and it doubles as documentation.
-If this field isn't provided, Django will use the machine-readable name. In this
-example, we've only defined a human-readable name for ``Poll.pub_date``. For all
-other fields in this model, the field's machine-readable name will suffice as
-its human-readable name.
+你可以在初始化 :class:`~django.db.models.Field`
+实例时使用第一个位置的可选参数来指定人类可读的名字。这在Django的内省部分中被使用到了，而且兼作文档的一部分来增强代码的可读性。若字段未提供该参数，Django
+将使用符合机器习惯的名字。在本例中，我们仅定义了一个符合人类习惯的字段名
+``Poll.pub_date``
+。对于模型中的其他字段，机器名称就已经足够替代人类名称了。
 
-Some :class:`~django.db.models.Field` classes have required arguments.
-:class:`~django.db.models.CharField`, for example, requires that you give it a
-:attr:`~django.db.models.CharField.max_length`. That's used not only in the
-database schema, but in validation, as we'll soon see.
+一些 :class:`~django.db.models.Field` 实例是需要参数的。
+例如 :class:`~django.db.models.CharField` 需要你指定
+:attr:`~django.db.models.CharField.max_length`。这不仅适用于数据库结构，以后我们还会看到也用于数据验证中。
 
-A :class:`~django.db.models.Field` can also have various optional arguments; in
-this case, we've set the :attr:`~django.db.models.Field.default` value of
-``votes`` to 0.
+一个 :class:`~django.db.models.Field` 实例可以有不同的可选参数；
+在本例中，我们将 ``votes`` 的 :attr:`~django.db.models.Field.default` 的值设为 0 。
 
-Finally, note a relationship is defined, using
-:class:`~django.db.models.ForeignKey`. That tells Django each ``Choice`` is related
-to a single ``Poll``. Django supports all the common database relationships:
-many-to-ones, many-to-manys and one-to-ones.
+最后，注意我们使用了 :class:`~django.db.models.ForeignKey`
+定义了一个关联。它告诉 Django  每一个``Choice`` 关联一个 ``Poll`` 。 Django
+支持常见数据库的所有关联：多对一（ many-to-ones ），多对多（ many-to-manys
+） 和 一对一 （ one-to-ones ）。
 
 .. _`Python path`: http://docs.python.org/tutorial/modules.html#the-module-search-path
 
