@@ -1,98 +1,87 @@
 =================
-Django Exceptions
+Django 异常
 =================
 
 
-Django raises some Django specific exceptions as well as many standard
-Python exceptions.
+Django 提供了一些 Django 特定的异常以及许多 Python 异常。
 
-Django-specific Exceptions
+Django 特定异常
 ==========================
 
 .. module:: django.core.exceptions
     :synopsis: Django specific exceptions
 
-ObjectDoesNotExist and DoesNotExist
+ObjectDoesNotExist 和 DoesNotExist
 -----------------------------------
 .. exception:: DoesNotExist
 .. exception:: ObjectDoesNotExist
 
-    The :exc:`DoesNotExist` exception is raised when an object is not found
-    for the given parameters of a query.
+    :exc:`DoesNotExist` 当一个给定参数的查询未能发现对象时抛出该异常。
 
-    :exc:`ObjectDoesNotExist` is defined in :mod:`django.core.exceptions`.
-    :exc:`DoesNotExist` is a subclass of the base :exc:`ObjectDoesNotExist`
-    exception that is provided on every model class as a way of
-    identifying the specific type of object that could not be found.
+    :exc:`ObjectDoesNotExist` 定义在 :mod:`django.core.exceptions` 中。
+    :exc:`DoesNotExist` 是基类 :exc:`ObjectDoesNotExist` 异常的子类， 
+    用于提供对每一个模型类作为一种识别对象未能发现的特定类型的一种方式。
 
-    See :meth:`~django.db.models.query.QuerySet.get()` for further information
-    on :exc:`ObjectDoesNotExist` and :exc:`DoesNotExist`.
+    请查看 :meth:`~django.db.models.query.QuerySet.get()` 获取
+    :exc:`ObjectDoesNotExist` 和 :exc:`DoesNotExist` 的更多信息。
 
 MultipleObjectsReturned
 -----------------------
 .. exception:: MultipleObjectsReturned
 
-    The :exc:`MultipleObjectsReturned` exception is raised by a query if only
-    one object is expected, but multiple objects are returned. A base version
-    of this exception is provided in :mod:`django.core.exceptions`; each model
-    class contains a subclassed version that can be used to identify the
-    specific object type that has returned multiple objects.
+    :exc:`MultipleObjectsReturned` 当预期仅返回一个对象的查询确返回多个是抛出的异常。
+    该异常的基础版本由 :mod:`django.core.exceptions` 提供；每个模型类都
+    包含一个子类版本用于识别返回多个对象的特定对象类型。
 
-    See :meth:`~django.db.models.query.QuerySet.get()` for further information.
+    请查看 :meth:`~django.db.models.query.QuerySet.get()` 获取更多信息。
 
 SuspiciousOperation
 -------------------
 .. exception:: SuspiciousOperation
 
-    The :exc:`SuspiciousOperation` exception is raised when a user has performed
-    an operation that should be considered suspicious from a security perspective,
-    such as tampering with a session cookie.
+    :exc:`SuspiciousOperation` 当用户执行的操作，从安全的角度来看被视为可疑时抛出的异常，例如篡改一个会话 cookie 。
 
 PermissionDenied
 ----------------
 .. exception:: PermissionDenied
 
-    The :exc:`PermissionDenied` exception is raised when a user does not have
-    permission to perform the action requested.
+    :exc:`PermissionDenied` 当用户没有权限来执行所请求的操作时抛出的异常。
 
 ViewDoesNotExist
 ----------------
 .. exception:: ViewDoesNotExist
 
-    The :exc:`ViewDoesNotExist` exception is raised by
-    :mod:`django.core.urlresolvers` when a requested view does not exist.
+    :exc:`ViewDoesNotExist` 当一个请求的视图不存在时由
+    :mod:`django.core.urlresolvers` 抛出的异常。
 
 MiddlewareNotUsed
 -----------------
 .. exception:: MiddlewareNotUsed
 
-    The :exc:`MiddlewareNotUsed` exception is raised when a middleware is not
-    used in the server configuration.
+    :exc:`MiddlewareNotUsed` 当一个中间件在当前服务器配置中不能使用时抛出的异常。
 
 ImproperlyConfigured
 --------------------
 .. exception:: ImproperlyConfigured
 
-    The :exc:`ImproperlyConfigured` exception is raised when Django is
-    somehow improperly configured -- for example, if a value in ``settings.py``
-    is incorrect or unparseable.
+    :exc:`ImproperlyConfigured` 当 Django 的某种配置错误时抛出的异常
+    -- 例如 ``settings.py`` 中的值错误或不可解析。
 
 FieldError
 ----------
 .. exception:: FieldError
 
-    The :exc:`FieldError` exception is raised when there is a problem with a
-    model field. This can happen for several reasons:
+    :exc:`FieldError` 当一个模型字段有问题是抛出的异常。
+    发生这种情况的原因有几个：
 
-    - A field in a model clashes with a field of the same name from an
-      abstract base class
-    - An infinite loop is caused by ordering
-    - A keyword cannot be parsed from the filter parameters
+    - 模型类中的字段名与抽象基类中的字段名相同而发生冲突
+    - 一个由排序造成的无限循环
+    - 一个关键字不能从过滤参数解析
     - A field cannot be determined from a keyword in the query
       parameters
     - A join is not permitted on the specified field
-    - A field name is invalid
-    - A query contains invalid order_by arguments
+    - 字段名无效
+    - 一个查询包含无效排序参数
 
 ValidationError
 ---------------
