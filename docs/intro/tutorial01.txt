@@ -536,11 +536,11 @@ Python 中处理时区，你可以在 :doc:`时区支持文档 </topics/i18n/tim
     >>> p.was_published_recently()
     True
 
-    # 给 Poll 设置一些 Choices 。The create call constructs a new
-    # Choice object, does the INSERT statement, adds the choice to the set
-    # of available choices and returns the new Choice object. Django creates
-    # a set to hold the "other side" of a ForeignKey relation
-    # (e.g. a poll's choices) which can be accessed via the API.
+    # 给 Poll 设置一些 Choices 。通过 create 方法调用构造方法去创建一个新
+    # Choice 对象实例，执行 INSERT 语句后添加该 choice 到 
+    # 可用的 choices 集中并返回这个新建的 Choice 对象实例。 Django 创建了
+    # 一个保存外键关联关系的集合 ( 例如 poll 的 choices) 以便可以通过 API
+    # 去访问。
     >>> p = Poll.objects.get(pk=1)
 
     # 从关联对象集中显示所有 choices  -- 到目前为止还没有。
