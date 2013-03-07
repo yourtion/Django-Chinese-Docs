@@ -13,7 +13,7 @@ Django 1.5 官方文档的中文版
 * [Epub][6]  
 * [HTML][7]  
 
-*由[readthedocs.org][3]同步更新后自动生成。*
+  ######由[readthedocs.org][3]同步更新后自动生成。
 [1]:https://www.djangoproject.com/
 [2]:https://docs.djangoproject.com/en/1.5/
 [3]:https://readthedocs.org/
