@@ -218,45 +218,44 @@ http://127.0.0.1:8000/admin/ 。你将看到管理员的登录界面：
 .. image:: _images/admin09.png
    :alt: Fieldset is initially collapsed
 
-Adding related objects
+添加关联对象
 ======================
 
-OK, we have our Poll admin page. But a ``Poll`` has multiple ``Choices``, and
-the admin page doesn't display choices.
+Ok，现在我们有了 Poll 的管理页面。但是一个 ``Poll`` 拥有多个 ``Choices`` ，而 
+该管理页面并没有显示对应的 choices 。
 
-Yet.
+是的。
 
-There are two ways to solve this problem. The first is to register ``Choice``
-with the admin just as we did with ``Poll``. That's easy::
+我们有两种方法来解决这个问题。第一种就像刚才 ``Poll`` 那样在管理网站上
+注册 ``Choice`` 。这很简单： ::
 
     from polls.models import Choice
 
     admin.site.register(Choice)
 
-Now "Choices" is an available option in the Django admin. The "Add choice" form
-looks like this:
+现在 "Choices" 在 Django 管理网站上是一个可用的选项了。"Add choice" 表单
+看起来像这样：
 
 .. image:: _images/admin10.png
    :alt: Choice admin page
 
-In that form, the "Poll" field is a select box containing every poll in the
-database. Django knows that a :class:`~django.db.models.ForeignKey` should be
-represented in the admin as a ``<select>`` box. In our case, only one poll
-exists at this point.
+该表单中，``Poll`` 字段是一个包含了数据库中每个 poll 的选择框。
+Django 知道 :class:`~django.db.models.ForeignKey` 在管理网站中以 ``<select>``
+框显示。在本例中，选择框中仅存在一个 poll 。
 
-Also note the "Add Another" link next to "Poll." Every object with a
-``ForeignKey`` relationship to another gets this for free. When you click "Add
-Another," you'll get a popup window with the "Add poll" form. If you add a poll
-in that window and click "Save," Django will save the poll to the database and
-dynamically add it as the selected choice on the "Add choice" form you're
-looking at.
+另外请注意 ``Poll`` 旁边的 "Add Another" 链接。每个有 ``ForeignKey``
+的对象关联到其他对象都会得到这个链接。
+当点击 "Add Another" 时，你将会获得一个 "Add poll" 表单的弹出窗口。
+如果你在窗口中添加了一 poll 并点击了 "Save" 按钮， Django 会将 poll
+保存至数据库中并且动态的添加为你正在查看的 "Add choice" 表单中的
+已选择项。
 
-But, really, this is an inefficient way of adding ``Choice`` objects to the system.
-It'd be better if you could add a bunch of Choices directly when you create the
-``Poll`` object. Let's make that happen.
+但是，这真是一个低效的将 ``Choice`` 对象添加进系统的方式。
+如果在创建 ``Poll`` 对象时能够直接添加一批 Choices 那会更好。
+让我们这样做吧。 
 
-Remove the ``register()`` call for the ``Choice`` model. Then, edit the ``Poll``
-registration code to read::
+移除对 ``Choice`` 模型的 ``register()`` 方法调用 。然后，将 ``Poll`` 的注册代码
+编辑为如下所示： ::
 
     from django.contrib import admin
     from polls.models import Choice, Poll
@@ -274,71 +273,68 @@ registration code to read::
 
     admin.site.register(Poll, PollAdmin)
 
-This tells Django: "``Choice`` objects are edited on the ``Poll`` admin page. By
-default, provide enough fields for 3 choices."
+这将告诉 Django: "``Choice`` 对象在 ``Poll`` 管理页面中被编辑。
+默认情况下，提供 3 个 choices 的字段空间。
 
-Load the "Add poll" page to see how that looks, you may need to restart your development server:
+载入 "Add poll" 页面来看看，你可能需要重启你的开发服务器：
 
 .. image:: _images/admin11t.png
    :alt: Add poll page now has choices on it
 
-It works like this: There are three slots for related Choices -- as specified
-by ``extra`` -- and each time you come back to the "Change" page for an
-already-created object, you get another three extra slots.
+它看起来像这样：多了三个为关联 Choices 提供的输入插槽 -- 由 ``extra`` 指定
+-- 并且每次你在 "Change" 页修改已经创建的对象时，都会另外获得三个额外插槽。
 
-At the end of the three current slots you will find an "Add another Choice"
-link.  If you click on it, a new slot will be added. If you want to remove the
-added slot, you can click on the X to the top right of the added slot. Note
-that you can't remove the original three slots. This image shows an added slot:
+在现有的三个插槽的底部，你会发现一个 "Add another Choice" 链接。
+如果你点击它，一个新的插槽会被添加。如果想移除添加的插槽，
+你可以点击所添加的插槽的右上方的 X 。注意你不能移除原有的三个插槽。
+此图片中显示了新增的插槽：
 
 .. image:: _images/admin15t.png
    :alt: Additional slot added dynamically
 
-One small problem, though. It takes a lot of screen space to display all the
-fields for entering related ``Choice`` objects. For that reason, Django offers a
-tabular way of displaying inline related objects; you just need to change
-the ``ChoiceInline`` declaration to read::
+还有个小问题。为了显示所有关联 ``Choice`` 对象的字段需要占用大量的
+屏幕空间。为此，Django 提供了一个以表格方式显示内嵌有关联对象的方式；
+你只需要将 ``ChoiceInline`` 声明改为如下所示： ::
 
     class ChoiceInline(admin.TabularInline):
         #...
 
-With that ``TabularInline`` (instead of ``StackedInline``), the
-related objects are displayed in a more compact, table-based format:
+使用了 ``TabularInline`` 后(而不是 ``StackedInline``) ，基于表的格式下相关
+对象被显示的更紧凑了：
 
 .. image:: _images/admin12t.png
    :alt: Add poll page now has more compact choices
 
-Note that there is an extra "Delete?" column that allows removing rows added
-using the "Add Another Choice" button and rows that have already been saved.
+需要注意的是有个额外的 "Delete?" 列允许保存时移除已保存过的行。
 
-Customize the admin change list
+自定义管理界面的变更列表
 ===============================
 
-Now that the Poll admin page is looking good, let's make some tweaks to the
-"change list" page -- the one that displays all the polls in the system.
+现在 Poll 的管理界面看起来不错了，让我们给 "chang list" 页面做些调整 --
+显示系统中所有 polls 的页面。
 
-Here's what it looks like at this point:
+下面是现在的样子：
 
 .. image:: _images/admin04t.png
    :alt: Polls change list page
 
-By default, Django displays the ``str()`` of each object. But sometimes it'd be
-more helpful if we could display individual fields. To do that, use the
-``list_display`` admin option, which is a tuple of field names to display, as
-columns, on the change list page for the object::
+默认情况下， Django 显示的是每个对象 ``str()`` 的结果。但是若是我们能够
+显示每个字段的话有时会更有帮助的。要做到这一点，需要使用 
+``list_display`` 管理选项，这是一个 tuple ，包含了要显示的字段名， 
+将会以列的形式在该对象的 chang lsit 页上列出来：::
 
     class PollAdmin(admin.ModelAdmin):
         # ...
         list_display = ('question', 'pub_date')
 
-Just for good measure, let's also include the ``was_published_recently`` custom
-method from Tutorial 1::
+效果再好的点话，让我们把在第一部分教程中自定义的方法 ``was_published_recently``
+也包括进来: ::
 
     class PollAdmin(admin.ModelAdmin):
         # ...
         list_display = ('question', 'pub_date', 'was_published_recently')
 
-Now the poll change list page looks like this:
+现在 poll 的变更列表页看起来像这样：
 
 .. image:: _images/admin13t.png
    :alt: Polls change list page, updated
