@@ -582,5 +582,5 @@ Python 中处理时区，你可以在 :doc:`时区支持文档 </topics/i18n/tim
 如需完整的数据库 API 信息，请查看我们的 :doc:`数据库 API 参考
 </topics/db/queries>` 。
 
-当你对 API 有所了解后, 请查看 :doc:`教程的第二部分
-</intro/tutorial02>` 来学习 Django 的自动生成管理器是如何工作的。
+当你对 API 有所了解后, 请查看 :doc:`教程 第2部分 </intro/tutorial02>` 来学习
+Django 的自动生成的管理网站是如何工作的。
