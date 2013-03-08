@@ -2,7 +2,7 @@
 编写你的第一个 Django 程序 第2部分
 =====================================
 
-本教程从 :doc:`Tutorial 1 </intro/tutorial01>` 开始。
+本教程上接 :doc:`教程 第1部分 </intro/tutorial01>` 。
 我们将继续开发 Web-poll 应用，并且专注在 Django 的
 自动生成的管理网站上。
 
@@ -339,15 +339,11 @@ Django 知道 :class:`~django.db.models.ForeignKey` 在管理网站中以 ``<sel
 .. image:: _images/admin13t.png
    :alt: Polls change list page, updated
 
-You can click on the column headers to sort by those values -- except in the
-case of the ``was_published_recently`` header, because sorting by the output
-of an arbitrary method is not supported. Also note that the column header for
-``was_published_recently`` is, by default, the name of the method (with
-underscores replaced with spaces), and that each line contains the string
-representation of the output.
+你可以点击列的标题对这些值进行排序 -- 除了 ``was_published_recently``
+这一列，因为不支持根据方法输出的内容的排序。还要注意的是默认情况下列的标题是
+``was_published_recently`` ，就是方法名（将下划线替换为空格），并且每一行以字符串形式输出。
 
-You can improve that by giving that method (in ``models.py``) a few
-attributes, as follows::
+你可以通过给该方法 （在 ``models.py`` 内 ） 添加一些属性来改善显示效果，如下所示：::
 
     class Poll(models.Model):
         # ...
@@ -357,85 +353,77 @@ attributes, as follows::
         was_published_recently.boolean = True
         was_published_recently.short_description = 'Published recently?'
 
-Edit your admin.py file again and add an improvement to the Poll change list page: Filters. Add the
-following line to ``PollAdmin``::
+再次编辑你的 admin.py 文件并添加一个改进 Poll 的 change list 页面效果的功能：
+筛选 ( Filters ) 。在 ``PollAdmin`` 内添加一行如下所示的代码：::
 
     list_filter = ['pub_date']
 
-That adds a "Filter" sidebar that lets people filter the change list by the
-``pub_date`` field:
+这就增加了一个 "筛选" 的侧边栏，让人们通过 ``pub_date`` 字段的值来筛选 change
+list 显示的内容：
 
 .. image:: _images/admin14t.png
    :alt: Polls change list page, updated
 
-The type of filter displayed depends on the type of field you're filtering on.
-Because ``pub_date`` is a :class:`~django.db.models.DateTimeField`, Django
-knows to give appropriate filter options: "Any date," "Today," "Past 7 days,"
+显示筛选的类型取决于你需要筛选的字段类型。
+因为 ``pub_date`` 是一个 :class:`~django.db.models.DateTimeField` 的实例，Django
+知道提供对应的筛选选项："Any date," "Today," "Past 7 days,"
 "This month," "This year."
 
-This is shaping up well. Let's add some search capability::
+为了效果更好。让我们来加上搜索功能：::
 
     search_fields = ['question']
 
-That adds a search box at the top of the change list. When somebody enters
-search terms, Django will search the ``question`` field. You can use as many
-fields as you'd like -- although because it uses a ``LIKE`` query behind the
-scenes, keep it reasonable, to keep your database happy.
+在 chang list 页的顶部增加了一个搜索框。当有人输入了搜索条件， Django 将搜索
+``question`` 字段。 虽然你可以使用任意数量的字段，如你希望的那样 --
+但是因为它在后台用 ``LIKE`` 查询，为了保持数据库的性能请合理使用。
 
-Finally, because ``Poll`` objects have dates, it'd be convenient to be able to
-drill down by date. Add this line::
+最后，因为 ``Poll`` 对象有日期字段，根据日期来向下钻取记录将会很方便。
+添加下面这一行代码：::
 
     date_hierarchy = 'pub_date'
 
-That adds hierarchical navigation, by date, to the top of the change list page.
-At top level, it displays all available years. Then it drills down to months
-and, ultimately, days.
+这会在 change list 页的顶部增加了基于日期的分层导航功能。
+在最顶层，显示所有可用年份。然后可钻取到月份，最终到天。
 
-Now's also a good time to note that change lists give you free pagination. The
-default is to display 100 items per page. Change-list pagination, search boxes,
-filters, date-hierarchies and column-header-ordering all work together like you
-think they should.
+现在又是一个好时机，请注意 change lists 页面提供了分页功能。默认情况下每一页显示 100
+条记录。 Change-list 分页，搜索框，筛选，日期分层和列标题排序如你所原地在一起运行了。
 
-Customize the admin look and feel
+自定义管理界面的外观
 =================================
 
-Clearly, having "Django administration" at the top of each admin page is
-ridiculous. It's just placeholder text.
+显而易见，在每一个管理页面顶部有 "Django administration" 是无语的。虽然它仅仅是个占位符。
 
-That's easy to change, though, using Django's template system. The Django admin
-is powered by Django itself, and its interfaces use Django's own template
-system.
+不过使用 Django 的模板系统是很容易改变的。Django 管理网站有 Django
+框架自身的功能，可以通过 Django 自身的模板系统来修改界面。
 
 .. _ref-customizing-your-projects-templates:
 
-Customizing your *project's* templates
+自定义你的 *项目* 模板
 --------------------------------------
 
-Create a ``templates`` directory in your project directory. Templates can
-live anywhere on your filesystem that Django can access. (Django runs as
-whatever user your server runs.) However, keeping your templates within the
-project is a good convention to follow.
+在你的项目目录下创建一个 ``templates``
+目录。模板可以放在你的文件系统的任何地方，Diango 都能访问。
+(Django 能以任何用户身份在你的服务器上运行。)
+然后，在你的项目中保存模板是一个好习惯。
 
-By default, :setting:`TEMPLATE_DIRS` is empty. So, let's add a line to it, to
-tell Django where our templates live::
+默认情况下，:setting:`TEMPLATE_DIRS`
+值是空的。因此，让我们添加一行代码，来告诉 Django 我们的模板在哪里：::
 
     TEMPLATE_DIRS = (
-        '/path/to/mysite/templates', # Change this to your own directory.
+        '/path/to/mysite/templates', # 将此处改为你的目录。
     )
 
-Now copy the template ``admin/base_site.html`` from within the default Django
-admin template directory in the source code of Django itself
-(``django/contrib/admin/templates``) into an ``admin`` subdirectory of
-whichever directory you're using in :setting:`TEMPLATE_DIRS`. For example, if
-your :setting:`TEMPLATE_DIRS` includes ``'/path/to/mysite/templates'``, as
-above, then copy ``django/contrib/admin/templates/admin/base_site.html`` to
-``/path/to/mysite/templates/admin/base_site.html``. Don't forget that
-``admin`` subdirectory.
+现在从 Django 源代码中自带的默认 Django 管理模板的目录 (``django/contrib/admin/templates``)
+下复制 ``admin/base_site.html`` 模板到你正在使用的 :setting:`TEMPLATE_DIRS`
+中任何目录的子目录 ``admin`` 下。例如：如果你的 :setting:`TEMPLATE_DIRS`
+中包含 ``'/path/to/mysite/templates'`` 目录，
+如上所述，复制 ``django/contrib/admin/templates/admin/base_site.html`` 模板到
+``/path/to/mysite/templates/admin/base_site.html`` 。不要忘了是
+``admin`` 子目录。
 
-.. admonition:: Where are the Django source files?
+.. admonition:: Django 的源代码在哪里？
 
-    If you have difficulty finding where the Django source files are located
-    on your system, run the following command:
+    如果在你的文件系统中很难找到 Django 源代码，可以运行如下命令：
 
     .. code-block:: bash
 
@@ -445,59 +433,49 @@ above, then copy ``django/contrib/admin/templates/admin/base_site.html`` to
         import django
         print(django.__path__)"
 
-Then, just edit the file and replace the generic Django text with your own
-site's name as you see fit.
+然后，只需要编辑该文件并将通用的 Djangot 文字替换为你认为适合的属于你自己的网站名。
 
-This template file contains lots of text like ``{% block branding %}``
-and ``{{ title }}``. The ``{%`` and ``{{`` tags are part of Django's
-template language. When Django renders ``admin/base_site.html``, this
-template language will be evaluated to produce the final HTML page.
+该模板包含了大量的文字，比如 ``{% block branding %}`` 和
+``{{ title }}``。``{%`` 和 ``{{`` 标记是 Django 模板语言的一部分。
+当 Django 呈现 ``admin/base_site.html`` 时，根据模板语言生成最终的 HTML 页面。
 Don't worry if you can't make any sense of the template right now --
-we'll delve into Django's templating language in Tutorial 3.
+如果你现在不能理解模板的含义先不用担心 -- 我们将在教程 3 中深入探讨 
+Django' 的模板语言。
 
-Note that any of Django's default admin templates can be overridden. To
-override a template, just do the same thing you did with ``base_site.html`` --
-copy it from the default directory into your custom directory, and make
-changes.
+请注意 Django 默认的管理网站中的任何模板都是可覆盖的。
+要覆盖一个模板，只需要像刚才处理 ``base_site.html`` 一样 --
+从默认的目录下复制到你的自定义目录下，并修改它。
 
-Customizing your *application's* templates
+自定义你的 *应用* 模板
 ------------------------------------------
 
-Astute readers will ask: But if :setting:`TEMPLATE_DIRS` was empty by default,
-how was Django finding the default admin templates? The answer is that, by
-default, Django automatically looks for a ``templates/`` subdirectory within
-each application package, for use as a fallback (don't forget that
-``django.contrib.admin`` is an application).
+细心的读者会问：如果 :setting:`TEMPLATE_DIRS` 默认的情况下是空值，
+那 Django 是如何找到默认的管理网站的模板的？ 答案就是在默认情况下，
+Django 会自动在每一个应用的包内查找 ``templates/`` 目录，作为备用使用。
+（不要忘记 ``django.contrib.admin`` 是一个应用）。
 
-Our poll application is not very complex and doesn't need custom admin
-templates. But if it grew more sophisticated and required modification of
-Django's standard admin templates for some of its functionality, it would be
-more sensible to modify the *application's* templates, rather than those in the
-*project*. That way, you could include the polls application in any new project
-and be assured that it would find the custom templates it needed.
+我们的 poll 应用不是很复杂并不需要自定义管理模板。但是如果它变得更复杂
+而且为了一些功能需要修改 Django 的标准管理模板，修改*应用*模板将是更
+明智的选择，而不是修改*项目*模板。通过这种方式，你可以在任何新项目包括 polls
+应用中自定义模板并且放心会找到需要的自定义的模板的。
 
-See the :ref:`template loader documentation <template-loaders>` for more
-information about how Django finds its templates.
+有关 Django 怎样找到它的模板的更多信息，请参考 :ref:`模板加载文档 <template-loaders>` 。
 
-Customize the admin index page
+自定义管理网站的首页
 ==============================
 
-On a similar note, you might want to customize the look and feel of the Django
-admin index page.
+于此类似，你可能还想自定义 Django 管理网站的首页。
 
-By default, it displays all the apps in :setting:`INSTALLED_APPS` that have been
-registered with the admin application, in alphabetical order. You may want to
-make significant changes to the layout. After all, the index is probably the
-most important page of the admin, and it should be easy to use.
+默认情况下，首页会显示在 :setting:`INSTALLED_APPS` 中所有注册了管理功能的应用，
+并按字母排序。你可能想在页面布局上做大修改。总之，首页可能是管理网站中最重要的页面，
+因此它应该很容易使用。
 
-The template to customize is ``admin/index.html``. (Do the same as with
-``admin/base_site.html`` in the previous section -- copy it from the default
-directory to your custom template directory.) Edit the file, and you'll see it
-uses a template variable called ``app_list``. That variable contains every
-installed Django app. Instead of using that, you can hard-code links to
-object-specific admin pages in whatever way you think is best. Again,
-don't worry if you can't understand the template language -- we'll cover that
-in more detail in Tutorial 3.
+你需要自定义的模板是 ``admin/index.html`` 。 （同先前处理
+``admin/base_site.html`` 一样 -- 从默认目录下复制到你自定义的模板目录下。）
+编辑这个文件，你将看到一个名为 ``app_list`` 的模板变量。这个变量包含了每一个
+已安装的 Django
+应用。你可以通过你认为最好的方法硬编码链接到特定对象的管理页面，而不是使用默认模板。
+再次强调，如果你不能理解模板语言的话不用担心 -- 我们将在教程 3 中详细介绍。
 
-When you're comfortable with the admin site, read :doc:`part 3 of this tutorial
-</intro/tutorial03>` to start working on public poll views.
+当你熟悉了管理网站的功能后，阅读 :doc:`教程 第3部分 </intro/tutorial03>`
+开始开发公共 poll 界面。
