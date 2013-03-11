@@ -2,75 +2,67 @@
 编写你的第一个 Django 程序 第3部分
 =====================================
 
-This tutorial begins where :doc:`Tutorial 2 </intro/tutorial02>` left off. We're
-continuing the Web-poll application and will focus on creating the public
-interface -- "views."
+本教程上接 :doc:`教程 第2部分 </intro/tutorial02>` 。我们将继续
+开发 Web-poll 应用并且专注在创建公共界面 --  "视图 （views ）"。
 
-Philosophy
+哲理
 ==========
 
-A view is a "type" of Web page in your Django application that generally serves
-a specific function and has a specific template. For example, in a blog
-application, you might have the following views:
+在 Django 应用程序中，视图是一“类”具有特定功能和模板的网页。
+例如，在一个博客应用程序中，你可能会有以下视图：
 
-* Blog homepage -- displays the latest few entries.
+* 博客首页 -- 显示最新发表的博客。
 
-* Entry "detail" page -- permalink page for a single entry.
+* 博客详细页面 -- 一篇博客的固定链接页。
 
-* Year-based archive page -- displays all months with entries in the
-  given year.
+* 基于年份的归档页 -- 显示给定年份中所有月份的博客。
 
-* Month-based archive page -- displays all days with entries in the
-  given month.
+* 基于月份的归档页 -- 显示给定月份中所有日期的博客。
 
-* Day-based archive page -- displays all entries in the given day.
+* 基于日期的归档页 -- 显示给定日期中所有的博客。
 
-* Comment action -- handles posting comments to a given entry.
+* 评论功能 -- 为一篇给定博客发表评论。
 
-In our poll application, we'll have the following four views:
+在我们的 poll 应用程序中，将有以下四个视图：
 
-* Poll "index" page -- displays the latest few polls.
+* Poll "index" 页 -- 显示最新发布的民意调查。
 
-* Poll "detail" page -- displays a poll question, with no results but
-  with a form to vote.
+* Poll "detail" 页 -- 显示一项民意调查的具体问题，不显示该项的投票结果但可以进行投票的 form 。
 
-* Poll "results" page -- displays results for a particular poll.
+* Poll "results" 页 -- 显示一项给定的民意调查的投票结果。
 
-* Vote action -- handles voting for a particular choice in a particular
-  poll.
+* 投票功能 -- 为一项给定的民意调查处理投票选项。
 
 In Django, web pages and other content are delivered by views. Each view is
-represented by a simple Python function (or method, in the case of class-based
-views). Django will choose a view by examining the URL that's requested (to be
-precise, the part of the URL after the domain name).
+在 Django 中，网页及其他内容是由视图来展现的。而每个视图就是一个简单的 Python 函数（或方法，
+对于基于类的视图情况下）。Django 会通过检查所请求的 URL （确切地说是域名之后的那部分 URL）来匹配一个视图。
 
-Now in your time on the web you may have come across such beauties as
-"ME2/Sites/dirmod.asp?sid=&type=gen&mod=Core+Pages&gid=A6CD4967199A42D9B65B1B".
-You will be pleased to know that Django allows us much more elegant
-*URL patterns* than that.
+平时你上网的时候可能会遇到像
+"ME2/Sites/dirmod.asp?sid=&type=gen&mod=Core+Pages&gid=A6CD4967199A42D9B65B1B" 这种如此美丽的 URL。
+你会很高兴知道 Django 允许我们使用比那优雅的 *URL 模式* 来展现 URL。
 
-A URL pattern is simply the general form of a URL - for example:
+URL 模式就是一个简单的一般形式的 URL - 比如:
 ``/newsarchive/<year>/<month>/``.
 
-To get from a URL to a view, Django uses what are known as 'URLconfs'. A
-URLconf maps URL patterns (described as regular expressions) to views.
+从 URL 获取到视图，Django 是通过 'URLconfs' 得知的。而
+URLconf 是一种 URL 模式 ( 由正则表达式描述 ) 映射到视图的配置。
 
-This tutorial provides basic instruction in the use of URLconfs, and you can
-refer to :mod:`django.core.urlresolvers` for more information.
+本教程中介绍了使用 URLconfs 的基本指令，你可以查阅
+:mod:`django.core.urlresolvers` 来获取更多信息。
 
-Write your first view
+编写你的地一个视图
 =====================
 
-Let's write the first view. Open the file ``polls/views.py``
-and put the following Python code in it::
+让我们编写第一个视图。打开文件 ``polls/views.py``
+并在其中输入以下 Python 代码 ::
 
     from django.http import HttpResponse
 
     def index(request):
         return HttpResponse("Hello, world. You're at the poll index.")
 
-This is the simplest view possible in Django. To call the view, we need to map
-it to a URL - and for this we need a URLconf.
+在 Django 中这可能是最简单的视图了。为了调用这个视图，我们需要将它映射到一个 URL
+-- 为此我们需要配置一个URLconf 。
 
 To create a URLconf in the polls directory, create a file called ``urls.py``.
 Your app directory should now look like::
