@@ -13,13 +13,13 @@
 
 * 博客首页 -- 显示最新发表的博客。
 
-* 博客详细页面 -- 一篇博客的固定链接页。
+* 博客详细页面 -- 一篇博客的独立页面。
 
-* 基于年份的归档页 -- 显示给定年份中所有月份的博客。
+* 基于年份的归档页 -- 显示给定年份中发表博客的所有月份。
 
-* 基于月份的归档页 -- 显示给定月份中所有日期的博客。
+* 基于月份的归档页 -- 显示给定月份中发表博客的所有日期。
 
-* 基于日期的归档页 -- 显示给定日期中所有的博客。
+* 基于日期的归档页 -- 显示给定日期中发表的所有的博客。
 
 * 评论功能 -- 为一篇给定博客发表评论。
 
@@ -33,24 +33,23 @@
 
 * 投票功能 -- 为一项给定的民意调查处理投票选项。
 
-In Django, web pages and other content are delivered by views. Each view is
 在 Django 中，网页及其他内容是由视图来展现的。而每个视图就是一个简单的 Python 函数（或方法，
 对于基于类的视图情况下）。Django 会通过检查所请求的 URL （确切地说是域名之后的那部分 URL）来匹配一个视图。
 
 平时你上网的时候可能会遇到像
 "ME2/Sites/dirmod.asp?sid=&type=gen&mod=Core+Pages&gid=A6CD4967199A42D9B65B1B" 这种如此美丽的 URL。
-你会很高兴知道 Django 允许我们使用比那优雅的 *URL 模式* 来展现 URL。
+但是你会很高兴知道 Django 允许我们使用比那优雅的 *URL 模式* 来展现 URL。
 
 URL 模式就是一个简单的一般形式的 URL - 比如:
 ``/newsarchive/<year>/<month>/``.
 
-从 URL 获取到视图，Django 是通过 'URLconfs' 得知的。而
-URLconf 是一种 URL 模式 ( 由正则表达式描述 ) 映射到视图的配置。
+Django 是通过 'URLconfs' 从 URL 获取到视图的。而
+URLconf 是将 URL 模式 ( 由正则表达式来描述的 ) 映射到视图的一种配置。
 
 本教程中介绍了使用 URLconfs 的基本指令，你可以查阅
 :mod:`django.core.urlresolvers` 来获取更多信息。
 
-编写你的地一个视图
+编写你的第一个视图
 =====================
 
 让我们编写第一个视图。打开文件 ``polls/views.py``
@@ -64,8 +63,8 @@ URLconf 是一种 URL 模式 ( 由正则表达式描述 ) 映射到视图的配�
 在 Django 中这可能是最简单的视图了。为了调用这个视图，我们需要将它映射到一个 URL
 -- 为此我们需要配置一个URLconf 。
 
-To create a URLconf in the polls directory, create a file called ``urls.py``.
-Your app directory should now look like::
+在 polls 目录下创建一个名为 ``urls.py`` 的 URLconf 文档。
+你的应用目录现在看起来像这样 ::
 
     polls/
         __init__.py
@@ -75,7 +74,7 @@ Your app directory should now look like::
         urls.py
         views.py
 
-In the ``polls/urls.py`` file include the following code::
+在 ``polls/urls.py`` 文件中输入以下代码： ::
 
     from django.conf.urls import patterns, url
 
@@ -85,9 +84,8 @@ In the ``polls/urls.py`` file include the following code::
         url(r'^$', views.index, name='index')
     )
 
-The next step is to point the root URLconf at the ``polls.urls`` module. In
-``mysite/urls.py`` insert an :func:`~django.conf.urls.include`, leaving you
-with::
+下一步是将 ``polls.urls`` 模块指向 root URLconf 。在
+``mysite/urls.py`` 中插入一个 :func:`~django.conf.urls.include` 方法，最后的样子如下所示 ::
 
     from django.conf.urls import patterns, include, url
 
@@ -99,16 +97,14 @@ with::
         url(r'^admin/', include(admin.site.urls)),
     )
 
-You have now wired an `index` view into the URLconf. Go to
-http://localhost:8000/polls/ in your browser, and you should see the text
-"*Hello, world. You're at the poll index.*", which you defined in the
-``index`` view.
+现在你在 URLconf 中配置了 `index` 视图。通过浏览器访问
+http://localhost:8000/polls/ ，如同你在 ``index`` 视图中定义的一样，你将看到
+"*Hello, world. You're at the poll index.*" 文字。
 
-The :func:`~django.conf.urls.url` function is passed four arguments, two
-required: ``regex`` and ``view``, and two optional: ``kwargs``, and ``name``.
-At this point, it's worth reviewing what these arguments are for.
+:func:`~django.conf.urls.url` 函数有四个参数，两个必须的： ``regex`` 和 ``view``， 两个可选的： ``kwargs``， 以及 ``name``。
+接下来，来探讨下这些参数的意义。
 
-:func:`~django.conf.urls.url` argument: regex
+:func:`~django.conf.urls.url` 参数: regex
 ---------------------------------------------
 
 The term `regex` is a commonly used short form meaning `regular expression`,
@@ -136,7 +132,7 @@ aren't too complex as noted above).
 
 .. _Wikipedia's entry: http://en.wikipedia.org/wiki/Regular_expression
 
-:func:`~django.conf.urls.url` argument: view
+:func:`~django.conf.urls.url` 参数： view
 --------------------------------------------
 
 When Django finds a regular expression match, Django calls the specified view
@@ -146,20 +142,20 @@ arguments. If the regex uses simple captures, values are passed as positional
 arguments; if it uses named captures, values are passed as keyword arguments.
 We'll give an example of this in a bit.
 
-:func:`~django.conf.urls.url` argument: kwargs
+:func:`~django.conf.urls.url` 参数： kwargs
 ----------------------------------------------
 
 Arbitrary keyword arguments can be passed in a dictionary to the target view. We
 aren't going to use this feature of Django in the tutorial.
 
-:func:`~django.conf.urls.url` argument: name
+:func:`~django.conf.urls.url` 参数： name
 ---------------------------------------------
 
 Naming your URL lets you refer to it unambiguously from elsewhere in Django
 especially templates. This powerful feature allows you to make  global changes
 to the url patterns of your project while only touching a single file.
 
-Writing more views
+编写更多视图
 ==================
 
 Now let's add a few more views to ``polls/views.py``. These views are
