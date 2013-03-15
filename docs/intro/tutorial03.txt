@@ -107,40 +107,32 @@ http://localhost:8000/polls/ ，如同你在 ``index`` 视图中定义的一样�
 :func:`~django.conf.urls.url` 参数: regex
 ---------------------------------------------
 
-The term `regex` is a commonly used short form meaning `regular expression`,
-which is a syntax for matching patterns in strings, or in this case, url
-patterns. Django starts at the first regular expression and makes its way down
-the list,  comparing the requested URL against each regular expression until it
-finds one that matches.
+`regex` 是 `regular expression` 的简写，这是字符串中的模式匹配的一种语法，
+在 Django 中就是是 url 匹配模式。
+Django 将请求的 URL 从上至下依次匹配列表中的正则表达式，直到匹配到一个为止。
 
-Note that these regular expressions do not search GET and POST parameters, or
-the domain name. For example, in a request to
-``http://www.example.com/myapp/``, the URLconf will look for ``myapp/``. In a
-request to ``http://www.example.com/myapp/?page=3``, the URLconf will also
-look for ``myapp/``.
+需要注意的是，这些正则表达式不会匹配 GET 和 POST 参数，以及域名。
+例如：针对 ``http://www.example.com/myapp/`` 这一请求，URLconf 将只查找 ``myapp/``。而在
+``http://www.example.com/myapp/?page=3`` 中 URLconf 也仅查找 ``myapp/`` 。
 
-If you need help with regular expressions, see `Wikipedia's entry`_ and the
-documentation of the :mod:`re` module. Also, the O'Reilly book "Mastering
-Regular Expressions" by Jeffrey Friedl is fantastic. In practice, however,
-you don't need to be an expert on regular expressions, as you really only need
-to know how to capture simple patterns. In fact, complex regexes can have poor
-lookup performance, so you probably shouldn't rely on the full power of regexes.
+如果你需要正则表达式方面的帮助，请参阅 `Wikipedia's entry`_ 和本文档中的 :mod:`re` 模块。
+此外，O'Reilly 出版的由 Jeffrey Friedl 著的 "Mastering Regular Expressions" 也是不错的。
+但是，实际上，你并不需要成为一个正则表达式的专家，仅仅需要知道如何捕获简单的模式。
+事实上，复杂的正则表达式会降低查找性能，因此你不能完全依赖正则表达式的功能。
 
-Finally, a performance note: these regular expressions are compiled the first
-time the URLconf module is loaded. They're super fast (as long as the lookups
-aren't too complex as noted above).
+最后有个性能上的提示：这些正则表达式在 URLconf 模块第一次加载时会被编译。
+因此它们速度超快 ( 像上面提到的那样只要查找的不是太复杂 )。
 
 .. _Wikipedia's entry: http://en.wikipedia.org/wiki/Regular_expression
 
 :func:`~django.conf.urls.url` 参数： view
 --------------------------------------------
 
-When Django finds a regular expression match, Django calls the specified view
-function, with an :class:`~django.http.HttpRequest` object as the first
-argument and any “captured” values from the regular expression as other
-arguments. If the regex uses simple captures, values are passed as positional
-arguments; if it uses named captures, values are passed as keyword arguments.
-We'll give an example of this in a bit.
+当 Django 匹配了一个正则表达式就会调用指定的视图功能，包含一个
+:class:`~django.http.HttpRequest` 实例作为第一个参数和正则表达式
+“捕获” 的一些值的作为其他参数。
+如果使用简单的正则捕获，将按顺序位置传参数；如果按命名的正则捕获，将按关键字传参数值。
+有关这一点我们会给出一个例子。
 
 :func:`~django.conf.urls.url` 参数： kwargs
 ----------------------------------------------
