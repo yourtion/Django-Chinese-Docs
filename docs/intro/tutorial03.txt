@@ -137,21 +137,19 @@ Django 将请求的 URL 从上至下依次匹配列表中的正则表达式，�
 :func:`~django.conf.urls.url` 参数： kwargs
 ----------------------------------------------
 
-Arbitrary keyword arguments can be passed in a dictionary to the target view. We
-aren't going to use this feature of Django in the tutorial.
+任意关键字参数可传一个字典至目标视图。在本教程中，我们并不打算使用 Django 这一特性。
 
 :func:`~django.conf.urls.url` 参数： name
 ---------------------------------------------
 
-Naming your URL lets you refer to it unambiguously from elsewhere in Django
-especially templates. This powerful feature allows you to make  global changes
-to the url patterns of your project while only touching a single file.
+命名你的 URL ，让你在 Django 的其他地方明确地引用它，特别是在模板中。
+这一强大的功能可允许你通过一个文件就可全局修改项目中的 URL 模式。
 
 编写更多视图
 ==================
 
-Now let's add a few more views to ``polls/views.py``. These views are
-slightly different, because they take an argument::
+现在让我们添加一些视图到 ``polls/views.py`` 中去。这些视图与之前的略有不同，因为
+它们有一个参数：::
 
     def detail(request, poll_id):
         return HttpResponse("You're looking at poll %s." % poll_id)
@@ -162,8 +160,8 @@ slightly different, because they take an argument::
     def vote(request, poll_id):
         return HttpResponse("You're voting on poll %s." % poll_id)
 
-Wire these news views into the ``polls.urls`` module by adding the following
-:func:`~django.conf.urls.url` calls::
+将新视图按如下所示的 :func:`~django.conf.urls.url` 方法添加到
+``polls.urls`` 模块中去：::
 
     from django.conf.urls import patterns, url
 
@@ -180,74 +178,60 @@ Wire these news views into the ``polls.urls`` module by adding the following
         url(r'^(?P<poll_id>\d+)/vote/$', views.vote, name='vote'),
     )
 
-Take a look in your browser, at "/polls/34/". It'll run the ``detail()``
-method and display whatever ID you provide in the URL. Try
-"/polls/34/results/" and "/polls/34/vote/" too -- these will display the
-placeholder results and voting pages.
+在你的浏览器中访问 http://localhost:8000/polls/34/ 。将运行 ``detail()``
+方法并且显示你在 URL 中提供的任意 ID 。试着访问 http://localhost:8000/polls/34/results/ 
+和 http://localhost:8000/polls/34/vote/ -- 将会显示对应的结果页及投票页。
 
-When somebody requests a page from your Web site -- say, "/polls/34/", Django
-will load the ``mysite.urls`` Python module because it's pointed to by the
-:setting:`ROOT_URLCONF` setting. It finds the variable named ``urlpatterns``
-and traverses the regular expressions in order. The
-:func:`~django.conf.urls.include` functions we are using simply reference
-other URLconfs. Note that the regular expressions for the
-:func:`~django.conf.urls.include` functions don't have a ``$`` (end-of-string
-match character) but rather a trailing slash. Whenever Django encounters
-:func:`~django.conf.urls.include`, it chops off whatever part of the URL
-matched up to that point and sends the remaining string to the included
-URLconf for further processing.
+当有人访问你的网站页面如 “ /polls/34/ ” 时，Django 会加载 ``mysite.urls`` 模块，这是因为
+:setting:`ROOT_URLCONF` 设置指向它。接着在该模块中寻找名为``urlpatterns`` 的变量并依次匹配其中的正则表达式。
+:func:`~django.conf.urls.include` 可让我们便利地引用其他 URLconfs 。请注意
+:func:`~django.conf.urls.include` 中的正则表达式没有 ``$`` (字符串结尾的匹配符
+match character) 而尾部是一个反斜杠。当 Django 解析
+:func:`~django.conf.urls.include` 时，它截取匹配的 URL 那部分而把剩余的字符串交由
+加载进来的 URLconf 作进一步处理。
 
-The idea behind :func:`~django.conf.urls.include` is to make it easy to
-plug-and-play URLs. Since polls are in their own URLconf
-(``polls/urls.py``), they can be placed under "/polls/", or under
-"/fun_polls/", or under "/content/polls/", or any other path root, and the
-app will still work.
 
-Here's what happens if a user goes to "/polls/34/" in this system:
+:func:`~django.conf.urls.include` 背后隐藏的想法是使 URLs 即插即用。
+由于 polls 在自己的 URLconf(``polls/urls.py``) 中，因此它们可以被放置在 "/polls/" 路径下，或
+"/fun_polls/" 路径下，或 "/content/polls/" 路径下，或者其他根路径，而应用仍可以运行。
 
-* Django will find the match at ``'^polls/'``
+以下是当用户访问 "/polls/34/" 路径时系统中将发生的事：
 
-* Then, Django will strip off the matching text (``"polls/"``) and send the
-  remaining text -- ``"34/"`` -- to the 'polls.urls' URLconf for
-  further processing which matches ``r'^(?P<poll_id>\d+)/$'`` resulting in a
-  call to the ``detail()`` view like so::
+* Django 将寻找 ``'^polls/'`` 的匹配
+
+* 接着，Django 截取匹配文本 (``"polls/"``) 后剩余的文本
+  -- ``"34/"`` -- 传递到 'polls.urls' URLconf 中作进一步处理，
+  再将匹配 ``r'^(?P<poll_id>\d+)/$'`` 的结果作为参数传给 ``detail()`` 视图 ::
 
     detail(request=<HttpRequest object>, poll_id='34')
 
-The ``poll_id='34'`` part comes from ``(?P<poll_id>\d+)``. Using parentheses
-around a pattern "captures" the text matched by that pattern and sends it as an
-argument to the view function; ``?P<poll_id>`` defines the name that will
-be used to identify the matched pattern; and ``\d+`` is a regular expression to
-match a sequence of digits (i.e., a number).
+``poll_id='34'`` 这部分就是来自 ``(?P<poll_id>\d+)`` 匹配的结果。 使用括号包围一个
+正则表达式所“捕获”的文本可作为一个参数传给视图函数；``?P<poll_id>`` 将会定义名称用于标识匹配的内容；
+而 ``\d+`` 是一个用于匹配数字序列（即一个数字）的正则表达式。
 
-Because the URL patterns are regular expressions, there really is no limit on
-what you can do with them. And there's no need to add URL cruft such as
-``.html`` -- unless you want to, in which case you can do something like
-this::
+因为 URL 模式是正则表达式，所以你可以毫无限制地使用它们。但是不要加上 URL 多余的部分如
+``.html`` -- 除非你想，那你可以像下面这样：::
 
     (r'^polls/latest\.html$', 'polls.views.index'),
 
-But, don't do that. It's silly.
+真的，不要这样做。这很傻。
 
-Write views that actually do something
+在视图中添加些实际的功能
 ======================================
 
-Each view is responsible for doing one of two things: returning an
-:class:`~django.http.HttpResponse` object containing the content for the
-requested page, or raising an exception such as :exc:`~django.http.Http404`. The
-rest is up to you.
+每个视图只负责以下两件事中的一件：返回一个
+:class:`~django.http.HttpResponse` 对象，其中包含了所请求页面的内容，
+或者抛出一个异常，例如 :exc:`~django.http.Http404` 。剩下的就由你来实现了。
 
-Your view can read records from a database, or not. It can use a template
-system such as Django's -- or a third-party Python template system -- or not.
-It can generate a PDF file, output XML, create a ZIP file on the fly, anything
-you want, using whatever Python libraries you want.
+你的视图可以读取数据库记录，或者不用。它可以使用一个模板系统，例如 Django 的 
+-- 或者第三方的 Python 模板系统 -- 或不用。它可以生成一个 PDF 文件，输出 XML ，
+即时创建 ZIP 文件， 你可以使用你想用的任何 Python 库来做你想做的任何事。
 
-All Django wants is that :class:`~django.http.HttpResponse`. Or an exception.
+而 Django 只要求是一个 :class:`~django.http.HttpResponse` 或一个异常。
 
-Because it's convenient, let's use Django's own database API, which we covered
-in :doc:`Tutorial 1 </intro/tutorial01>`. Here's one stab at the ``index()``
-view, which displays the latest 5 poll questions in the system, separated by
-commas, according to publication date::
+因为它很方便，那让我们来使用 Django 自己的数据库 API 吧，
+在 :doc:`教程 第1部分 </intro/tutorial01>` 中提过。修改下 ``index()`` 视图，
+让它显示系统中最新发布的 5 个调查问题，以逗号分割并按发布日期排序：::
 
     from django.http import HttpResponse
 
@@ -258,13 +242,12 @@ commas, according to publication date::
         output = ', '.join([p.question for p in latest_poll_list])
         return HttpResponse(output)
 
-There's a problem here, though: the page's design is hard-coded in the view. If
-you want to change the way the page looks, you'll have to edit this Python code.
-So let's use Django's template system to separate the design from Python by
-creating a template that the view can use.
+在这就有了个问题，页面的设计是硬编码在视图中的。如果你想改变页面的外观，就必须修改这里的
+Python 代码。因此，让我们使用 Django 的模板系统创建一个模板给视图用，就使设计和 Python 代码
+分割开来了。
 
-First, create a directory called ``templates`` in your ``polls`` directory.
-Django will look for templates in there.
+首先，在 ``polls`` 目录下创建一个 ``templates`` 目录。
+Django 将会在那寻找模板。
 
 Django's :setting:`TEMPLATE_LOADERS` setting contains a list of callables that
 know how to import templates from various sources. One of the defaults is
