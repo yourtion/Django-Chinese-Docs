@@ -243,49 +243,42 @@ match character) 而尾部是一个反斜杠。当 Django 解析
         return HttpResponse(output)
 
 在这就有了个问题，页面的设计是硬编码在视图中的。如果你想改变页面的外观，就必须修改这里的
-Python 代码。因此，让我们使用 Django 的模板系统创建一个模板给视图用，就使设计和 Python 代码
-分割开来了。
+Python 代码。因此，让我们使用 Django 的模板系统创建一个模板给视图用，就使页面设计从 Python 代码中
+分离出来了。
 
 首先，在 ``polls`` 目录下创建一个 ``templates`` 目录。
 Django 将会在那寻找模板。
 
-Django's :setting:`TEMPLATE_LOADERS` setting contains a list of callables that
-know how to import templates from various sources. One of the defaults is
-:class:`django.template.loaders.app_directories.Loader` which looks for a
-"templates" subdirectory in each of the :setting:`INSTALLED_APPS` - this is how
-Django knows to find the polls templates even though we didn't modify
-:setting:`TEMPLATE_DIRS`, as we did in :ref:`Tutorial 2
-<ref-customizing-your-projects-templates>`.
+Django 的 :setting:`TEMPLATE_LOADERS` 配置中包含一个知道如何从各种来源导入模板的可调用的方法列表。
+其中有一个默认值是 :class:`django.template.loaders.app_directories.Loader` ，Django 就会在每个 :setting:`INSTALLED_APPS` 
+的 "templates" 子目录下查找模板 - 这就是 Django 知道怎么找到 polls 模板的原因，即使我们
+没有修改 :setting:`TEMPLATE_DIRS`, 还是如同在 :ref:`教程 第2部分
+<ref-customizing-your-projects-templates>` 那样。
 
-.. admonition:: Organizing templates
+.. admonition:: 组织模板
 
-    We *could* have all our templates together, in one big templates directory,
-    and it would work perfectly well. However, this template belongs to the
-    polls application, so unlike the admin template we created in the previous
-    tutorial, we'll put this one in the application's template directory
-    (``polls/templates``) rather than the project's (``templates``). We'll
-    discuss in more detail in the :doc:`reusable apps tutorial
-    </intro/reusable-apps>` *why* we do this.
+    我们 *能够* 在一个大的模板目录下一起共用我们所有的模板，而且它们会运行得很好。
+    但是，此模板属于 polls 应用，因此与我们在上一个教程中创建的管理模板不同，
+    我们要把这个模板放在应用的模板目录 (``polls/templates``) 下而不是项目的模板目录 (``templates``) 。
+    我们将在 :doc:`可重用的应用教程 
+    </intro/reusable-apps>` 中详细讨论我们 *为什么* 要这样做。
 
-Within the ``templates`` directory you have just created, create another
-directory called ``polls``, and within that create a file called
-``index.html``. In other words, your template should be at
-``polls/templates/polls/index.html``. Because of how the ``app_directories``
-template loader works as described above, you can refer to this template within
-Django simply as ``polls/index.html``.
+在你刚才创建的``templates`` 目录下，另外创建个名为 
+``polls`` 的目录，并在其中创建一个 
+``index.html`` 文件。换句话说，你的模板应该是
+``polls/templates/polls/index.html`` 。由于知道如上所述的 ``app_directories`` 模板加载器是
+如何运行的，你可以参考 Django 内的模板简单的作为 ``polls/index.html`` 模板。
 
-.. admonition:: Template namespacing
+.. admonition:: 模板命名空间
 
-    Now we *might* be able to get away with putting our templates directly in
-    ``polls/templates`` (rather than creating another ``polls`` subdirectory),
-    but it would actually be a bad idea. Django will choose the first template
-    it finds whose name matches, and if you had a template with the same name
-    in a *different* application, Django would be unable to distinguish between
-    them. We need to be able to point Django at the right one, and the easiest
-    way to ensure this is by *namespacing* them. That is, by putting those
-    templates inside *another* directory named for the application itself.
+    现在我们 *也许* 能够直接把我们的模板放在
+    ``polls/templates`` 目录下 ( 而不是另外创建 ``polls`` 子目录 ) ，
+    但它实际上是一个坏注意。 Django 将会选择第一个找到的按名称匹配的模板，
+    如果你在 *不同* 应用中有相同的名称的模板，Django 将无法区分它们。
+    我们想要让 Django 指向正确的模板，最简单的方法是通过 *命名空间* 来确保是
+    他们的模板。也就是说，将模板放在 *另一个* 目录下并命名为应用本身的名称。
 
-Put the following code in that template:
+将以下代码添加到该模板中:
 
 .. code-block:: html+django
 
@@ -299,7 +292,7 @@ Put the following code in that template:
         <p>No polls are available.</p>
     {% endif %}
 
-Now let's use that html template in our index view::
+现在让我们在 index 视图中使用这个模板：  ::
 
     from django.http import HttpResponse
     from django.template import Context, loader
@@ -314,21 +307,18 @@ Now let's use that html template in our index view::
         })
         return HttpResponse(template.render(context))
 
-That code loads the template called  ``polls/index.html`` and passes it a
-context. The context is a dictionary mapping template variable names to Python
-objects.
+代码将加载 ``polls/index.html`` 模板并传递一个 context 变量。 The context is a dictionary mapping template variable names to Python
+该 context 变量是一个映射了 Python 对象到模板变量的字典。
 
-Load the page by pointing your browser at "/polls/", and you should see a
-bulleted-list containing the "What's up" poll from Tutorial 1. The link points
-to the poll's detail page.
+在你的浏览器中加载 "/polls/" 页，你应该看到一个列表，包含了在教程 第1部分 中创建的
+"What's up" 调查。而链接指向 poll 的详细页面。
 
-A shortcut: :func:`~django.shortcuts.render`
+快捷方式: :func:`~django.shortcuts.render`
 --------------------------------------------
 
-It's a very common idiom to load a template, fill a context and return an
-:class:`~django.http.HttpResponse` object with the result of the rendered
-template. Django provides a shortcut. Here's the full ``index()`` view,
-rewritten::
+这是一个非常常见的习惯用语，用于加载模板，填充上下文并返回一个含有模板渲染结果的
+:class:`~django.http.HttpResponse` 对象。
+Django 提供了一种快捷方式。这里重写完整的 ``index()`` 视图 ::
 
     from django.shortcuts import render
 
@@ -339,21 +329,19 @@ rewritten::
         context = {'latest_poll_list': latest_poll_list}
         return render(request, 'polls/index.html', context)
 
-Note that once we've done this in all these views, we no longer need to import
-:mod:`~django.template.loader`, :class:`~django.template.Context` and
-:class:`~django.http.HttpResponse` (you'll want to keep ``HttpResponse`` if you
-still have the stub methods for ``detail``, ``results``, and ``vote``).
+请注意，一旦我们在所有视图中都这样做了，我们就不再需要导入
+:mod:`~django.template.loader` ， :class:`~django.template.Context` 和
+:class:`~django.http.HttpResponse` ( 如果你仍然保留了 ``detail``,``resutls``, 和``vote`` 方法，你还是需要保留 ``HttpResponse`` 
+) 。
 
-The :func:`~django.shortcuts.render` function takes the request object as its
-first argument, a template name as its second argument and a dictionary as its
-optional third argument. It returns an :class:`~django.http.HttpResponse`
-object of the given template rendered with the given context.
+:func:`~django.shortcuts.render` 函数中第一个参数是 request 对象，第二个参数是一个模板名称，第三个是一个字典类型的可选参数。
+它将返回一个包含有给定模板根据给定的上下文渲染结果的 :class:`~django.http.HttpResponse` 对象。
 
-Raising a 404 error
+抛出 404 异常
 ===================
 
-Now, let's tackle the poll detail view -- the page that displays the question
-for a given poll. Here's the view::
+现在让我们解决 poll 的详细视图 -- 该页显示一个给定 poll 的详细问题。
+视图代码如下所示：::
 
     from django.http import Http404
     # ...
@@ -364,18 +352,16 @@ for a given poll. Here's the view::
             raise Http404
         return render(request, 'polls/detail.html', {'poll': poll})
 
-The new concept here: The view raises the :exc:`~django.http.Http404` exception
-if a poll with the requested ID doesn't exist.
+在这有个新概念：如果请求的 poll 的 ID 不存在，该视图将抛出 :exc:`~django.http.Http404` 异常。
 
-We'll discuss what you could put in that ``polls/detail.html`` template a bit
-later, but if you'd like to quickly get the above example working, a file
-containing just::
+我们稍后讨论如何设置 ``polls/detail.html`` 模板，若是你想快速运行上面的例子，
+在模板文件中添加如下代码： ::
 
     {{ poll }}
 
-will get you started for now.
+现在你可以运行了。
 
-A shortcut: :func:`~django.shortcuts.get_object_or_404`
+快捷方式: :func:`~django.shortcuts.get_object_or_404`
 -------------------------------------------------------
 
 It's a very common idiom to use :meth:`~django.db.models.query.QuerySet.get`
