@@ -364,9 +364,9 @@ Django 提供了一种快捷方式。这里重写完整的 ``index()`` 视图 ::
 快捷方式: :func:`~django.shortcuts.get_object_or_404`
 -------------------------------------------------------
 
-It's a very common idiom to use :meth:`~django.db.models.query.QuerySet.get`
-and raise :exc:`~django.http.Http404` if the object doesn't exist. Django
-provides a shortcut. Here's the ``detail()`` view, rewritten::
+这很常见，当你使用 :meth:`~django.db.models.query.QuerySet.get` 获取对象时
+对象却不存在时就会抛出 :exc:`~django.http.Http404` 异常。对此 Django
+提供了一个快捷操作。如下所示重写 ``detail()`` 视图： ::
 
     from django.shortcuts import render, get_object_or_404
     # ...
@@ -374,74 +374,61 @@ provides a shortcut. Here's the ``detail()`` view, rewritten::
         poll = get_object_or_404(Poll, pk=poll_id)
         return render(request, 'polls/detail.html', {'poll': poll})
 
-The :func:`~django.shortcuts.get_object_or_404` function takes a Django model
-as its first argument and an arbitrary number of keyword arguments, which it
-passes to the :meth:`~django.db.models.query.QuerySet.get` function of the
-model's manager. It raises :exc:`~django.http.Http404` if the object doesn't
-exist.
+:func:`~django.shortcuts.get_object_or_404` 函数需要一个 Django 模型类作为第一个参数以及
+一些关键字参数，它将这些参数传递给模型管理器中的 :meth:`~django.db.models.query.QuerySet.get` 函数。
+若对象不存在时就抛出 :exc:`~django.http.Http404` 异常。
 
-.. admonition:: Philosophy
+.. admonition:: 哲理
 
-    Why do we use a helper function :func:`~django.shortcuts.get_object_or_404`
-    instead of automatically catching the
-    :exc:`~django.core.exceptions.ObjectDoesNotExist` exceptions at a higher
-    level, or having the model API raise :exc:`~django.http.Http404` instead of
-    :exc:`~django.core.exceptions.ObjectDoesNotExist`?
+    为什么我们要使用一个 :func:`~django.shortcuts.get_object_or_404` 辅助函数
+    而不是在更高级别自动捕获 :exc:`~django.core.exceptions.ObjectDoesNotExist` 异常，
+    或者由模型 API 抛出 :exc:`~django.http.Http404` 异常而不是 :exc:`~django.core.exceptions.ObjectDoesNotExist` 异常？
 
-    Because that would couple the model layer to the view layer. One of the
-    foremost design goals of Django is to maintain loose coupling. Some
-    controlled coupling is introduced in the :mod:`django.shortcuts` module.
+    因为那样会使模型层与视图层耦合在一起。Django 最重要的设计目标之一
+    就是保持松耦合。一些控制耦合在 :mod:`django.shortcuts` 模块中介绍。
 
-There's also a :func:`~django.shortcuts.get_list_or_404` function, which works
-just as :func:`~django.shortcuts.get_object_or_404` -- except using
-:meth:`~django.db.models.query.QuerySet.filter` instead of
-:meth:`~django.db.models.query.QuerySet.get`. It raises
-:exc:`~django.http.Http404` if the list is empty.
+还有个 :func:`~django.shortcuts.get_list_or_404` 函数，与
+:func:`~django.shortcuts.get_object_or_404` 一样 -- 不过执行的是
+:meth:`~django.db.models.query.QuerySet.filter` 而不是 
+:meth:`~django.db.models.query.QuerySet.get` 。若返回的是空列表将抛出
+:exc:`~django.http.Http404` 异常。
 
-Write a 404 (page not found) view
+编写一个 404 ( 页面未找到 ) 视图
 =================================
 
-When you raise :exc:`~django.http.Http404` from within a view, Django
-will load a special view devoted to handling 404 errors. It finds it
-by looking for the variable ``handler404`` in your root URLconf (and
-only in your root URLconf; setting ``handler404`` anywhere else will
-have no effect), which is a string in Python dotted syntax -- the same
-format the normal URLconf callbacks use. A 404 view itself has nothing
-special: It's just a normal view.
+当你在视图中抛出 :exc:`~django.http.Http404` 时，Django
+将载入一个特定的视图来处理 404 错误。Django 会根据你的 root URLconf ( 仅在你的 
+root URLconf 中；在其他任何地方设置 ``handler404`` 都无效 ）中设置的 ``handler404`` 
+变量来查找该视图，这个变量是个 Python 包格式字符串 -- 和标准 URLconf 中的回调函数格式是一样的。
+404 视图本身没有什么特殊性：它就是一个普通的视图。
 
-You normally won't have to bother with writing 404 views. If you don't set
-``handler404``, the built-in view :func:`django.views.defaults.page_not_found`
-is used by default. Optionally, you can create a ``404.html`` template
-in the root of your template directory. The default 404 view will then use that
-template for all 404 errors when :setting:`DEBUG` is set to ``False`` (in your
-settings module). If you do create the template, add at least some dummy
-content like "Page not found".
+通常你不必费心去编写 404 视图。若你没有设置 ``handler404`` 变量，默认情况下会使用内置的
+:func:`django.views.defaults.page_not_found` 视图。或者你可以在你的模板目录下的根目录中
+创建一个 ``404.html`` 模板。当 :setting:`DEBUG` 值是 ``False`` ( 在你的 settings 模块中 ) 时，
+默认的 404 视图将使用此模板来显示所有的 404 错误。 如果你创建了这个模板，至少添加些如“页面未找到”
+的内容。
 
-A couple more things to note about 404 views:
+一些有关 404 视图需要注意的事项 :
 
-* If :setting:`DEBUG` is set to ``True`` (in your settings module) then your
-  404 view will never be used (and thus the ``404.html`` template will never
-  be rendered) because the traceback will be displayed instead.
+* 如果 :setting:`DEBUG` 设为 ``True`` ( 在你的 settings 模块里 ) 那么你的
+  404 视图将永远不会被使用 ( 因此 ``404.html`` 模板也将永远不会被渲染
+  ) 因为将要显示的是跟踪信息。
 
-* The 404 view is also called if Django doesn't find a match after checking
-  every regular expression in the URLconf.
+* 当 Django 在 URLconf 中不能找到能匹配的正则表达式时 404 视图也将被调用。
 
-Write a 500 (server error) view
-===============================
+编写一个 500 ( 服务器错误 ) 视图
+==================================
 
-Similarly, your root URLconf may define a ``handler500``, which points
-to a view to call in case of server errors. Server errors happen when
-you have runtime errors in view code.
+类似的，你可以在 root URLconf 中定义 ``handler500`` 变量，在服务器发生错误时
+调用它指向的视图。服务器错误是指视图代码产生的运行时错误。
 
-Likewise, you should create a ``500.html`` template at the root of your
-template directory and add some content like "Something went wrong".
+同样，你在模板根目录下创建一个 ``500.html`` 模板并且添加些像“出错了”的内容。
 
-Use the template system
+使用模板系统
 =======================
 
-Back to the ``detail()`` view for our poll application. Given the context
-variable ``poll``, here's what the ``polls/detail.html`` template might look
-like:
+回到我们 poll 应用的 ``detail()`` 视图中，指定 ``poll`` 变量后，``polls/detail.html``
+模板可能看起来这样 :
 
 .. code-block:: html+django
 
@@ -452,24 +439,22 @@ like:
     {% endfor %}
     </ul>
 
-The template system uses dot-lookup syntax to access variable attributes. In
-the example of ``{{ poll.question }}``, first Django does a dictionary lookup
-on the object ``poll``. Failing that, it tries an attribute lookup -- which
-works, in this case. If attribute lookup had failed, it would've tried a
-list-index lookup.
+模板系统使用了“变量.属性”的语法访问变量的属性值。
+例如 ``{{ poll.question }}`` ， 首先 Django  对 ``poll`` 对象做字典查询。
+否则 Django 会尝试属性查询  -- 在本例中属性查询成功了。
+如果属性查询还是失败了，Django 将尝试 list-index 查询。
 
-Method-calling happens in the :ttag:`{% for %}<for>` loop:
-``poll.choice_set.all`` is interpreted as the Python code
-``poll.choice_set.all()``, which returns an iterable of ``Choice`` objects and is
-suitable for use in the :ttag:`{% for %}<for>` tag.
+在 :ttag:`{% for %}<for>` 循环中有方法调用: 
+``poll.choice_set.all`` 就是 Python 代码
+``poll.choice_set.all()``,它将返回一组可迭代的 ``Choice`` 对象，可以用在
+:ttag:`{% for %}<for>` 标签中。
 
-See the :doc:`template guide </topics/templates>` for more about templates.
+请参阅 :doc:`模板指南 </topics/templates>` 来了解模板的更多内容。
 
-Removing hardcoded URLs in templates
+移除模板中硬编码的 URLS
 ====================================
 
-Remember, when we wrote the link to a poll in the ``polls/index.html``
-template, the link was partially hardcoded like this:
+记得吗? 在 ``polls/index.html`` 模板中，我们链接到 poll 的链接是硬编码成这样子的：
 
 .. code-block:: html+django
 
