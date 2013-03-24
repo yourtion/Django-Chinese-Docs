@@ -2,15 +2,14 @@
 编写你的第一个 Django 程序 第4部分
 =====================================
 
-This tutorial begins where :doc:`Tutorial 3 </intro/tutorial03>` left off. We're
-continuing the Web-poll application and will focus on simple form processing and
-cutting down our code.
+本教程上接 :doc:`教程 第3部分 </intro/tutorial03>` 。我们将
+继续开发 Web-poll 应用并且关注在处理简单的窗体和优化我们的代码。
 
-Write a simple form
+编写一个简单的窗体
 ===================
 
-Let's update our poll detail template ("polls/detail.html") from the last
-tutorial, so that the template contains an HTML ``<form>`` element:
+让我们把在上一篇教程中编写的 poll 的 detail 模板更新下，在模板中包含 HTML 的 ``<form>``
+组件:
 
 .. code-block:: html+django
 
@@ -27,39 +26,35 @@ tutorial, so that the template contains an HTML ``<form>`` element:
     <input type="submit" value="Vote" />
     </form>
 
-A quick rundown:
+简单的总结下:
 
-* The above template displays a radio button for each poll choice. The
-  ``value`` of each radio button is the associated poll choice's ID. The
-  ``name`` of each radio button is ``"choice"``. That means, when somebody
-  selects one of the radio buttons and submits the form, it'll send the
-  POST data ``choice=3``. This is the basic concept of HTML forms.
+* 上面的模板中为每个投票选项设置了一个单选按钮。每个单选按钮的
+  ``value`` 是投票选项对应的 ID 。每个单选按钮的
+  ``name`` 都是 ``"choice"``。这意味着，当有人选择了一个单选按钮并提交了表单，将会发送
+  的 POST 数据是 ``choice=3``。这是 HTML 表单中的基本概念。
 
-* We set the form's ``action`` to ``{% url 'polls:vote' poll.id %}``, and we
-  set ``method="post"``. Using ``method="post"`` (as opposed to
-  ``method="get"``) is very important, because the act of submitting this
-  form will alter data server-side. Whenever you create a form that alters
-  data server-side, use ``method="post"``. This tip isn't specific to
-  Django; it's just good Web development practice.
+* 我们将 form 的 ``action`` 设置为 ``{% url 'polls:vote' poll.id %}``，以及设置了
+  ``method="post"`` 。使用 ``method="post"`` ( 而不是 ``method="get"``) 是非常重要的，因为这种提交表单的方式会改变服务器端的数据。
+  当你创建一个表单为了修改服务器端的数据时，请使用
+  ``method="post"`` 。这不是 Django 特定的技巧；这是优秀的 Web 开发实践。
 
-* ``forloop.counter`` indicates how many times the :ttag:`for` tag has gone
-  through its loop
+* ``forloop.counter`` 表示 :ttag:`for` 标签在循环中已经循环过的次数
 
-* Since we're creating a POST form (which can have the effect of modifying
-  data), we need to worry about Cross Site Request Forgeries.
-  Thankfully, you don't have to worry too hard, because Django comes with
-  a very easy-to-use system for protecting against it. In short, all POST
-  forms that are targeted at internal URLs should use the
-  :ttag:`{% csrf_token %}<csrf_token>` template tag.
+* 由于我们要创建一个POST form ( 具有修改数据的功能
+  )，我们需要担心跨站点请求伪造 （ Cross Site Request Forgeries ）。
+  值得庆幸的是，你不必太担心这一点，因为 Django 自带了一个非常容易使用的系统来防御它。
+  总之，所有的 POST form 针对内部的 URLs 时都应该使用 
+  :ttag:`{% csrf_token %}<csrf_token>` 模板标签。
 
 Now, let's create a Django view that handles the submitted data and does
-something with it. Remember, in :doc:`Tutorial 3 </intro/tutorial03>`, we
-created a URLconf for the polls application that includes this line::
+现在，让我们来创建一个 Django 视图来处理提交的数据。
+记得吗？在 :doc:`教程 第3部分 </intro/tutorial03>` 中，我们为 polls 应用创建了一个
+URLconf 配置中包含有这一行代码::
 
     url(r'^(?P<poll_id>\d+)/vote/$', views.vote, name='vote'),
 
-We also created a dummy implementation of the ``vote()`` function. Let's
-create a real version. Add the following to ``polls/views.py``::
+我们还创建了一个虚拟实现的 ``vote()`` 函数。让我们创建一个真实版本吧。在
+``polls/views.py`` 中添加如下代码::
 
     from django.shortcuts import get_object_or_404, render
     from django.http import HttpResponseRedirect, HttpResponse
@@ -84,7 +79,7 @@ create a real version. Add the following to ``polls/views.py``::
             # user hits the Back button.
             return HttpResponseRedirect(reverse('polls:results', args=(p.id,)))
 
-This code includes a few things we haven't covered yet in this tutorial:
+在这代码中有些内容还未在本教程中提过:
 
 * :attr:`request.POST <django.http.HttpRequest.POST>` is a dictionary-like
   object that lets you access submitted data by key name. In this case,
