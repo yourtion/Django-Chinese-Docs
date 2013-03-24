@@ -460,11 +460,9 @@ root URLconf 中；在其他任何地方设置 ``handler404`` 都无效 ）中�
 
     <li><a href="/polls/{{ poll.id }}/">{{ poll.question }}</a></li>
 
-The problem with this hardcoded, tightly-coupled approach is that it becomes
-challenging to change URLs on projects with a lot of templates. However, since
-you defined the name argument in the :func:`~django.conf.urls.url` functions in
-the ``polls.urls`` module, you can remove a reliance on specific URL paths
-defined in your url configurations by using the ``{% url %}`` template tag:
+问题出在硬编码，紧耦合使得在大量的模板中修改 URLs 成为富有挑战性的项目。
+不过，既然你在 ``polls.urls`` 模块中的 :func:`~django.conf.urls.url` 函数中定义了
+命名参数，那么就可以在 url 配置中使用 ``{% url %}`` 模板标记来移除特定的 URL 路径依赖:
 
 .. code-block:: html+django
 
@@ -472,46 +470,42 @@ defined in your url configurations by using the ``{% url %}`` template tag:
 
 .. note::
 
-    If ``{% url 'detail' poll.id %}`` (with quotes) doesn't work, but
-    ``{% url detail poll.id %}`` (without quotes) does, that means you're
-    using a version of Django < 1.5. In this case, add the following
-    declaration at the top of your template:
+    如果 ``{% url 'detail' poll.id %}`` (含引号) 不能运行，但是
+    ``{% url detail poll.id %}`` (不含引号) 却能运行，那么意味着你使用的 Djang 低于
+    < 1.5 版。这样的话，你需要在模板文件的顶部添加如下的声明：:
 
     .. code-block:: html+django
 
         {% load url from future %}
 
-The way this works is by looking up the URL definition as specified in the
-``polls.urls`` module. You can see exactly where the URL name of 'detail' is
-defined below::
+其原理就是在 ``polls.urls`` 模块中寻找指定的 URL 定义。
+你知道命名为 'detail' 的 URL 就如下所示那样定义的一样：::
 
     ...
-    # the 'name' value as called by the {% url %} template tag
+    # 'name' 的值由 {% url %} 模板标记来引用
     url(r'^(?P<poll_id>\d+)/$', views.detail, name='detail'),
     ...
 
-If you want to change the URL of the polls detail view to something else,
-perhaps to something like ``polls/specifics/12/`` instead of doing it in the
-template (or templates) you would change it in ``polls/urls.py``::
+如果你想将 polls 的 detail 视图的 URL 改成其他样子，或许像
+``polls/specifics/12/`` 这样子，那就不需要在模板（或者模板集）中修改而只要在
+``polls/urls.py`` 修改就行了::
 
     ...
-    # added the word 'specifics'
+    # 新增 'specifics'
     url(r'^specifics/(?P<poll_id>\d+)/$', views.detail, name='detail'),
     ...
 
 Namespacing URL names
+URL 名称的命名空间
 ======================
 
-The tutorial project has just one app, ``polls``. In real Django projects,
-there might be five, ten, twenty apps or more. How does Django differentiate
-the URL names between them? For example, the ``polls`` app has a ``detail``
-view, and so might an app on the same project that is for a blog. How does one
-make it so that Django knows which app view to create for a url when using the
-``{% url %}`` template tag?
+本教程中的项目只有一个应用：``polls`` 。在实际的 Django 项目中，可能有 5、10、20 或者
+更多的应用。Django 是如何区分它们的 URL 名称的呢？比如说，``polls`` 应用有一个
+``detail`` 视图，而可能会在同一个项目中是一个博客应用的视图。Django 是如何知道
+使用 ``{% url %}`` 模板标记创建应用的 url 时选择正确呢？
 
-The answer is to add namespaces to your root URLconf. In the ``mysite/urls.py``
-file (the project's ``urls.py``, not the application's), go ahead and change
-it to include namespacing::
+答案是在你的 root URLconf 配置中添加命名空间。在 ``mysite/urls.py`` 文件
+(项目的 ``urls.py``，不是应用的) 中，修改为包含命名空间的定义::
 
     from django.conf.urls import patterns, include, url
 
@@ -523,17 +517,16 @@ it to include namespacing::
         url(r'^admin/', include(admin.site.urls)),
     )
 
-Now change your ``polls/index.html`` template from:
+现在将你的 ``polls/index.html`` 模板中原来的 detail 视图:
 
 .. code-block:: html+django
 
     <li><a href="{% url 'detail' poll.id %}">{{ poll.question }}</a></li>
 
-to point at the namespaced detail view:
+修改为包含命名空间的 detail 视图:
 
 .. code-block:: html+django
 
     <li><a href="{% url 'polls:detail' poll.id %}">{{ poll.question }}</a></li>
 
-When you're comfortable with writing views, read :doc:`part 4 of this tutorial
-</intro/tutorial04>` to learn about simple form processing and generic views.
+当你编写视图熟练后，请阅读 :doc:`教程 第4部分 </intro/tutorial04>` 来学习如何处理简单的表单和通用视图。
