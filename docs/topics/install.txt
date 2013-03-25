@@ -1,59 +1,53 @@
 =====================
-How to install Django
+如何安装 Django
 =====================
 
-This document will get you up and running with Django.
+本文档将指导你安装及运行 Django 框架。
 
-Install Python
+安装 Python
 ==============
 
-Being a Python Web framework, Django requires Python.
+作为一个 Python Web 框架，Django 是需要 Python 的。
 
-It works with any Python version from 2.6.5 to 2.7. It also features
-experimental support for versions from 3.2.3 to 3.3.
+Django 能在 Python 2.6.5 至 2.7 之间所有的版本下运行。它还具有实验性的支持 Python 3.2.3 至 3.3 
+版本的功能。
 
-Get Python at http://www.python.org. If you're running Linux or Mac OS X, you
-probably already have it installed.
+在 http://www.python.org 上获取 Python 。如果你运行在 Linux 或 Mac OS X 系统下，你可能
+已经安装好了。
 
-.. admonition:: Django on Jython
+.. admonition:: 在 Jython 上运行 Django
 
-    If you use Jython_ (a Python implementation for the Java platform), you'll
-    need to follow a few additional steps. See :doc:`/howto/jython` for details.
+    如果你使用 Jython_ ( 一个在 Java 平台上实现的 Python )，你需要遵循一些额外的步骤。
+    请参考 :doc:`/howto/jython` 获取更多信息。
 
 .. _jython: http://jython.org/
 
-.. admonition:: Python on Windows
+.. admonition:: 在 Windows 系统上运行 Python
 
-    On Windows, you might need to adjust your ``PATH`` environment variable
-    to include paths to Python executable and additional scripts. For example,
-    if your Python is installed in ``C:\Python27\``, the following paths need
-    to be added to ``PATH``::
+    在 Windows 系统上，你可能需要i调整你的 ``PATH`` 环境变量来包含 Python 的可执行文件以及
+    附加的脚本文件的目录。比如说，假设你的 Python 安装在 
+    ``C:\Python27\`` 目录下，那么你需要将如下所示的目录添加到你的 ``PATH`` 中去
+    ::
 
         C:\Python27\;C:\Python27\Scripts;
 
-Install Apache and mod_wsgi
+安装 Apache 和 mod_wsgi
 =============================
 
-If you just want to experiment with Django, skip ahead to the next
-section; Django includes a lightweight web server you can use for
-testing, so you won't need to set up Apache until you're ready to
-deploy Django in production.
+如果你只是想体验下 Django ，那么你可以直接跳到下一节了；Django 内置了一个轻量级的 Web 
+服务器让你用于测试，因此直到你准备在生产环境下部署 Django 之前，你都不需要配置 Apache 。
 
-If you want to use Django on a production site, use `Apache`_ with
-`mod_wsgi`_. mod_wsgi can operate in one of two modes: an embedded
-mode and a daemon mode. In embedded mode, mod_wsgi is similar to
-mod_perl -- it embeds Python within Apache and loads Python code into
-memory when the server starts. Code stays in memory throughout the
-life of an Apache process, which leads to significant performance
-gains over other server arrangements. In daemon mode, mod_wsgi spawns
-an independent daemon process that handles requests. The daemon
-process can run as a different user than the Web server, possibly
-leading to improved security, and the daemon process can be restarted
-without restarting the entire Apache Web server, possibly making
-refreshing your codebase more seamless. Consult the mod_wsgi
-documentation to determine which mode is right for your setup. Make
-sure you have Apache installed, with the mod_wsgi module activated.
-Django will work with any version of Apache that supports mod_wsgi.
+如果你想要在生产环境下使用 Django ，请使用包含 `mod_wsgi`_ 模块的 `Apache`_ 。
+mod_wsgi 模块可以运行在两种模式下：嵌入模式和守护进程模式。
+嵌入模式下， mod_wsgi 模块类似于 mod_perl 模块
+mod_perl -- 当服务器启动时它将在 Apache 内嵌入 Python 并将 Python 代码加载到内存中。
+在 Apache 进程的整个生命周期内代码一直驻留在内存中，这会导致显著的性能提升超过其他
+服务器的安排。守护进程模式下，mod_wsgi 将会生成一个独立的守护进程来处理请求。
+这个守护进程在服务器中能以不同的用户身份运行，导致更高的安全性，而且重启守护进程无需
+重启整个 Apache Web 服务器，从而使你无缝更新你的代码。
+请参阅 mod_wsgi 文档来确定哪一种模式适合你的需求。
+请确保你已经安装了 Apache ，并且激活了 mo_wsgi 模块。
+Django 可以运行在任何带有 mod_wsgi 模块的 Apache 版本下。
 
 See :doc:`How to use Django with mod_wsgi </howto/deployment/wsgi/modwsgi>`
 for information on how to configure mod_wsgi once you have it
