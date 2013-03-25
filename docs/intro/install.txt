@@ -43,22 +43,22 @@
 
 你可以使用下面这简单的三个方式来安装 Django:
 
-* 安装 :doc:`你的操作系统提供的发行包 </misc/distributions>`。对于操作系统中提供了 Django 发布包的人来说，这是最快捷的安装方法。
+* 安装 :doc:`你的操作系统所提供供的发行包 </misc/distributions>` 。对于操作系统提供了 Django 安装包的人来说，这是最快捷的安装方法。
 
-* :ref:`安装官方正式发布版 <installing-official-release>`。这是对于想要安装一个稳定版本而不介意运行一个稍旧版本的 Django 的人来说是最好的方式。
+* :ref:`安装官方正式发布的版本 <installing-official-release>` 。这是对于想要安装一个稳定版本而不介意运行一个稍旧版本的 Django 的人来说是最好的方式。
 
 * :ref:`安装最新的开发版本
-  <installing-development-version>`。这对于那些想要尝试最新最棒特性而不担心运行崭新代码的用户来说是最好的。
+  <installing-development-version>` 。这对于那些想要尝试最新最棒的特性而不担心运行崭新代码的用户来说是最好的。
 
 .. admonition:: 总是参考你所使用的对应版本的 Django 文档！
 
-    如果你采用前两种方式安装，你需要注意在文档中标明**在开发版中新增**的标记。这个标记表明这个特性仅适用开发版的 Django ，而他们可能不在官方版本发布。
+    如果采用了前两种方式进行安装，你需要注意在文档中标明**在开发版中新增**的标记。这个标记表明这个特性仅适用开发版的 Django ，而他们可能不在官方版本发布。
 
 
 验证安装
 ---------
 
-为了验证 Django 被成功的安装到 Python 中，在你的终端命令行(shell)下输入 ``python`` 。
+为了验证 Django 被成功的安装到 Python 中，在你的终端命令行 (shell) 下输入 ``python`` 。
 然后在 Python 提示符下，尝试导入 Django:
 
 .. parsed-literal::
