@@ -1,7 +1,7 @@
-Using Django
+使用 Django
 ============
 
-Introductions to all the key parts of Django you'll need to know:
+介绍了所有你需要知道的 Django 的关键内容:
 
 .. toctree::
    :maxdepth: 1
