@@ -46,7 +46,6 @@
   总之，所有的 POST form 针对内部的 URLs 时都应该使用 
   :ttag:`{% csrf_token %}<csrf_token>` 模板标签。
 
-Now, let's create a Django view that handles the submitted data and does
 现在，让我们来创建一个 Django 视图来处理提交的数据。
 记得吗？在 :doc:`教程 第3部分 </intro/tutorial03>` 中，我们为 polls 应用创建了一个
 URLconf 配置中包含有这一行代码::
@@ -79,67 +78,58 @@ URLconf 配置中包含有这一行代码::
             # user hits the Back button.
             return HttpResponseRedirect(reverse('polls:results', args=(p.id,)))
 
-在这代码中有些内容还未在本教程中提过:
+在这代码中有些内容还未在本教程中提到过:
 
-* :attr:`request.POST <django.http.HttpRequest.POST>` is a dictionary-like
-  object that lets you access submitted data by key name. In this case,
-  ``request.POST['choice']`` returns the ID of the selected choice, as a
-  string. :attr:`request.POST <django.http.HttpRequest.POST>` values are
-  always strings.
+* :attr:`request.POST <django.http.HttpRequest.POST>` 是一个类似字典的对象，可以让你
+  通过关键字名称来获取提交的数据。在本例中，
+  ``request.POST['choice']`` 返回了所选择的投票项目的 ID ，以字符串的形式。
+  :attr:`request.POST <django.http.HttpRequest.POST>` 的值永远是字符串形式的。
 
-  Note that Django also provides :attr:`request.GET
-  <django.http.HttpRequest.GET>` for accessing GET data in the same way --
-  but we're explicitly using :attr:`request.POST
-  <django.http.HttpRequest.POST>` in our code, to ensure that data is only
-  altered via a POST call.
+  请注意 Django 也同样的提供了通过 :attr:`request.GET
+  <django.http.HttpRequest.GET>` 获取 GET 数据的方法 --
+  但是在代码中我们明确的使用了 :attr:`request.POST
+  <django.http.HttpRequest.POST>` 方法，以确保数据是通过 POST 方法来修改的。
 
-* ``request.POST['choice']`` will raise :exc:`~exceptions.KeyError` if
-  ``choice`` wasn't provided in POST data. The above code checks for
-  :exc:`~exceptions.KeyError` and redisplays the poll form with an error
-  message if ``choice`` isn't given.
+* 如果 ``choice`` 未在 POST 数据中提供 ``request.POST['choice']`` 将抛出 :exc:`~exceptions.KeyError`
+  当未给定 ``choice`` 对象时上面的代码若检测到抛出的是
+  :exc:`~exceptions.KeyError` 异常就会向 poll 显示一条错误信息。
 
-* After incrementing the choice count, the code returns an
-  :class:`~django.http.HttpResponseRedirect` rather than a normal
-  :class:`~django.http.HttpResponse`.
-  :class:`~django.http.HttpResponseRedirect` takes a single argument: the
-  URL to which the user will be redirected (see the following point for how
-  we construct the URL in this case).
+* 在增加了投票选项的统计数后，代码返回一个 
+  :class:`~django.http.HttpResponseRedirect` 对象而不是常见的
+  :class:`~django.http.HttpResponse` 对象。
+  :class:`~django.http.HttpResponseRedirect` 对象需要一个参数：用户将被重定向的 URL
+  (请继续看下去在这情况下我们是如何构造 URL ) 。
 
-  As the Python comment above points out, you should always return an
-  :class:`~django.http.HttpResponseRedirect` after successfully dealing with
-  POST data. This tip isn't specific to Django; it's just good Web
-  development practice.
+  就像上面用 Python 作的注释那样，当成功的处理了 POST 数据后你应该总是返回一个
+  :class:`~django.http.HttpResponseRedirect` 对象。
+  这个技巧不是特定于 Django 的；它是优秀的 Web 开发实践。
 
-* We are using the :func:`~django.core.urlresolvers.reverse` function in the
-  :class:`~django.http.HttpResponseRedirect` constructor in this example.
-  This function helps avoid having to hardcode a URL in the view function.
-  It is given the name of the view that we want to pass control to and the
-  variable portion of the URL pattern that points to that view. In this
-  case, using the URLconf we set up in Tutorial 3, this
-  :func:`~django.core.urlresolvers.reverse` call will return a string like
+* 在本例中，我们在 :class:`~django.http.HttpResponseRedirect` 的构造方法中使用了 :func:`~django.core.urlresolvers.reverse` 函数。
+  此函数有助于避免在视图中硬编码 URL 的功能。它指定了我们想要的跳转的视图函数名以及视图函数中
+  URL 模式相应的可变参数。在本例中，我们使用了教程 第3部分中的 URLconf 配置，
+  :func:`~django.core.urlresolvers.reverse` 将会返回类似如下所示的字符串
   ::
 
     '/polls/3/results/'
 
-  ... where the ``3`` is the value of ``p.id``. This redirected URL will
-  then call the ``'results'`` view to display the final page.
+  ... 在此 ``3`` 就是 ``p.id`` 的值。该重定向 URL 会调用
+  ``'results'`` 视图并显示最终页面。
 
-As mentioned in Tutorial 3, ``request`` is a :class:`~django.http.HttpRequest`
-object. For more on :class:`~django.http.HttpRequest` objects, see the
-:doc:`request and response documentation </ref/request-response>`.
+正如在教程 第3部分提到的，``request`` 是一个 :class:`~django.http.HttpRequest`
+对象。想了解 :class:`~django.http.HttpRequest` 对象更多的内容，请参阅
+:doc:`request 和 response 文档 </ref/request-response>` 。
 
-After somebody votes in a poll, the ``vote()`` view redirects to the results
-page for the poll. Let's write that view::
+当有人投票后，``vote()`` 视图会重定向到投票结果页。让我们来编写这个视图
+::
 
     def results(request, poll_id):
         poll = get_object_or_404(Poll, pk=poll_id)
         return render(request, 'polls/results.html', {'poll': poll})
 
-This is almost exactly the same as the ``detail()`` view from :doc:`Tutorial 3
-</intro/tutorial03>`. The only difference is the template name. We'll fix this
-redundancy later.
+这几乎和 :doc:`教程 第3部分 </intro/tutorial03>` 中的 ``detail()`` 视图完全一样。
+</intro/tutorial03>` 。唯一的区别就是模板名称。 稍后我们会解决这个冗余问题。
 
-Now, create a ``polls/results.html`` template:
+现在，创建一个 ``polls/results.html`` 模板:
 
 .. code-block:: html+django
 
@@ -153,11 +143,10 @@ Now, create a ``polls/results.html`` template:
 
     <a href="{% url 'polls:detail' poll.id %}">Vote again?</a>
 
-Now, go to ``/polls/1/`` in your browser and vote in the poll. You should see a
-results page that gets updated each time you vote. If you submit the form
-without having chosen a choice, you should see the error message.
+现在，在浏览器中访问 ``/polls/1/`` 并完成投票。每次投票后你将会看到结果页数据都有更新。
+如果你没有选择投票选项就提交了，将会看到错误的信息。
 
-Use generic views: Less code is better
+使用通用视图：优化代码
 ======================================
 
 The ``detail()`` (from :doc:`Tutorial 3 </intro/tutorial03>`) and ``results()``
