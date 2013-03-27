@@ -49,42 +49,33 @@ mod_perl -- 当服务器启动时它将在 Apache 内嵌入 Python 并将 Python
 请确保你已经安装了 Apache ，并且激活了 mo_wsgi 模块。
 Django 可以运行在任何带有 mod_wsgi 模块的 Apache 版本下。
 
-See :doc:`How to use Django with mod_wsgi </howto/deployment/wsgi/modwsgi>`
-for information on how to configure mod_wsgi once you have it
-installed.
+请参阅 :doc:`怎样通过 mod_wsgi 运行 Django </howto/deployment/wsgi/modwsgi>`
+了解更多有关在安装 Django 后怎样配置 mod_wsgi 模块的信息。
 
-If you can't use mod_wsgi for some reason, fear not: Django supports many other
-deployment options. One is :doc:`uWSGI </howto/deployment/wsgi/uwsgi>`; it works
-very well with `nginx`_. Another is :doc:`FastCGI </howto/deployment/fastcgi>`,
-perfect for using Django with servers other than Apache. Additionally, Django
-follows the WSGI spec (:pep:`3333`), which allows it to run on a variety of
-server platforms. See the `server-arrangements wiki page`_ for specific
-installation instructions for each platform.
+如果某些原因你不能使用 mod_wsgi 模块，不要担心：Django 支持许多其他可选的的部署方案。
+其中之一是 :doc:`uWSGI </howto/deployment/wsgi/uwsgi>`；它在 `nginx`_ 下性能很好。另一个是 :doc:`FastCGI </howto/deployment/fastcgi>`，
+完美运行 Django 的非 Apache 服务器。此外，Django 遵循 WSGI 规范 (:pep:`3333`)，这使得它能运行在各种服务器平台上。
+每个平台的具体安装说明请参阅 `server-arrangements wiki 页面`_ 。
 
 .. _Apache: http://httpd.apache.org/
 .. _nginx: http://nginx.org/
 .. _mod_wsgi: http://code.google.com/p/modwsgi/
-.. _server-arrangements wiki page: https://code.djangoproject.com/wiki/ServerArrangements
+.. _server-arrangements wiki 页面: https://code.djangoproject.com/wiki/ServerArrangements
 
 .. _database-installation:
 
-Get your database running
+运行你的数据库
 =========================
 
-If you plan to use Django's database API functionality, you'll need to make
-sure a database server is running. Django supports many different database
-servers and is officially supported with PostgreSQL_, MySQL_, Oracle_ and
-SQLite_.
+如果你打算使用 Django 的数据库 API 功能，你将需要确保有一个运行中的数据库服务器。
+Django 支持许多不同的数据库并正式支持 PostgreSQL_ ，MySQL_ ，Oracle_ 和 SQLite_ 。
 
-If you are developing a simple project or something you don't plan to deploy
-in a production environment, SQLite is generally the simplest option as it
-doesn't require running a separate server. However, SQLite has many differences
-from other databases, so if you are working on something substantial, it's
-recommended to develop with the same database as you plan on using in
-production.
+如果你正在开发一个简单的项目，或者你不打算在生产环境下部署项目，
+SQLite 通常是最简单的选择，因为它不要求运行一个单独的服务器。
+然后，SQLite 与其他数据库之间有许多差异，因此如果你在处理一些实质性的工作，建议你在准备使用在生产环境
+中相同的数据库下进行开发。
 
-In addition to the officially supported databases, there are backends provided
-by 3rd parties that allow you to use other databases with Django:
+除了正式支持的数据库外，还有由第 3 方提供的后端功能包，允许你在 Django 下使用其他数据库：
 
 * `Sybase SQL Anywhere`_
 * `IBM DB2`_
