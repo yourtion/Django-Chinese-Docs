@@ -53,7 +53,7 @@ Django 可以运行在任何带有 mod_wsgi 模块的 Apache 版本下。
 了解更多有关在安装 Django 后怎样配置 mod_wsgi 模块的信息。
 
 如果某些原因你不能使用 mod_wsgi 模块，不要担心：Django 支持许多其他可选的的部署方案。
-其中之一是 :doc:`uWSGI </howto/deployment/wsgi/uwsgi>`；它在 `nginx`_ 下性能很好。另一个是 :doc:`FastCGI </howto/deployment/fastcgi>`，
+其中之一是 :doc:`uWSGI </howto/deployment/wsgi/uwsgi>` ；它在 `nginx`_ 下性能很好。另一个是 :doc:`FastCGI </howto/deployment/fastcgi>`，
 完美运行 Django 的非 Apache 服务器。此外，Django 遵循 WSGI 规范 (:pep:`3333`)，这使得它能运行在各种服务器平台上。
 每个平台的具体安装说明请参阅 `server-arrangements wiki 页面`_ 。
 
@@ -83,31 +83,27 @@ SQLite 通常是最简单的选择，因为它不要求运行一个单独的服�
 * Firebird_
 * ODBC_
 
-The Django versions and ORM features supported by these unofficial backends
-vary considerably. Queries regarding the specific capabilities of these
-unofficial backends, along with any support queries, should be directed to the
-support channels provided by each 3rd party project.
+Django 支持的版本和 ORM 特性的这些非官方的后端功能包之间有很大的不同。
+有关这些非官方的后端特定功能的查询，以及任何支持的功能查询，应该是通过每个第 3 方项目
+提供的支持渠道进行查询。
 
-In addition to a database backend, you'll need to make sure your Python
-database bindings are installed.
+除了数据库后端，你还需要确保你访问数据库的 Python 包已经安装。
 
-* If you're using PostgreSQL, you'll need the `postgresql_psycopg2`_ package.
-  You might want to refer to our :ref:`PostgreSQL notes <postgresql-notes>` for
-  further technical details specific to this database.
+* 如果你使用 PostgreSQL ，你将需要安装 `postgresql_psycopg2`_  包。
+  你可能需要参考我们的 :ref:`PostgreSQL 笔记 <postgresql-notes>` 进一步了解有关此数据库的
+  技术细节。
 
-  If you're on Windows, check out the unofficial `compiled Windows version`_.
+  如果你使用的是 Windows , 请安装非官方的 `compiled Windows version`_.
 
-* If you're using MySQL, you'll need the ``MySQL-python`` package, version
-  1.2.1p2 or higher. You will also want to read the database-specific
-  :ref:`notes for the MySQL backend <mysql-notes>`.
+* 如果你使用 MySQL ， 你将需要安装 ``MySQL-python`` 包，需要
+  1.2.1p2 或更高版本。你还会想要阅读
+  :ref:`notes for the MySQL backend <mysql-notes>` 了解此数据库的具体说明的。
 
-* If you're using Oracle, you'll need a copy of cx_Oracle_, but please
-  read the database-specific :ref:`notes for the Oracle backend <oracle-notes>`
-  for important information regarding supported versions of both Oracle and
-  ``cx_Oracle``.
+* 如果你使用 Oracle ，你将需要安装 cx_Oracle_ 包，但是请仔细阅读
+  :ref:`notes for the Oracle backend <oracle-notes>` 有关数据库的特定说明
+  获取有关受支持版本的 Oracle 和 ``cx_Oracle`` 的重要信息。
 
-* If you're using an unofficial 3rd party backend, please consult the
-  documentation provided for any additional requirements.
+* 如果你使用的是非官方的第 3 方后端，请参考文档提供的任何附加要求。
 
 If you plan to use Django's ``manage.py syncdb`` command to automatically
 create database tables for your models (after first installing Django and
