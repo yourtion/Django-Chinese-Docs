@@ -53,7 +53,7 @@ Django 可以运行在任何带有 mod_wsgi 模块的 Apache 版本下。
 了解更多有关在安装 Django 后怎样配置 mod_wsgi 模块的信息。
 
 如果某些原因你不能使用 mod_wsgi 模块，不要担心：Django 支持许多其他可选的的部署方案。
-其中之一是 :doc:`uWSGI </howto/deployment/wsgi/uwsgi>` ；它在 `nginx`_ 下性能很好。另一个是 :doc:`FastCGI </howto/deployment/fastcgi>`，
+其中之一是 :doc:`uWSGI </howto/deployment/wsgi/uwsgi>` ；它在 `nginx`_ 下性能很好。另一个是 :doc:`FastCGI </howto/deployment/fastcgi>` ，
 完美运行 Django 的非 Apache 服务器。此外，Django 遵循 WSGI 规范 (:pep:`3333`)，这使得它能运行在各种服务器平台上。
 每个平台的具体安装说明请参阅 `server-arrangements wiki 页面`_ 。
 
