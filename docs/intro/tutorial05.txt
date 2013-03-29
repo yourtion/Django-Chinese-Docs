@@ -2,14 +2,13 @@
 编写你的第一个 Django 程序 第5部分
 =====================================
 
-This tutorial begins where :doc:`Tutorial 4 </intro/tutorial04>` left off.
-We've built a Web-poll application, and we'll now create some automated tests
-for it.
+本教程上接 :doc:`教程 第4部分 </intro/tutorial04>`  。
+我们已经建立了一个 Web-poll 应用，现在我们会为它创建一些自动化测试。
 
-Introducing automated testing
+引入自动化测试
 =============================
 
-What are automated tests?
+什么是自动化测试？
 -------------------------
 
 Tests are simple routines that check the operation of your code.
