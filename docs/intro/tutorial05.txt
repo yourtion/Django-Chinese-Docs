@@ -11,51 +11,40 @@
 什么是自动化测试？
 -------------------------
 
-Tests are simple routines that check the operation of your code.
+测试是用于检测你的代码运行是否正确的简单程序。
 
-Testing operates at different levels. Some tests might apply to a tiny detail
-- *does a particular model method return values as expected?*, while others
-examine the overall operation of the software - *does a sequence of user inputs
-on the site produce the desired result?* That's no different from the kind of
-testing you did earlier in :doc:`Tutorial 1 </intro/tutorial01>`, using the
-shell to examine the behavior of a method, or running the application and
-entering data to check how it behaves.
+测试操作分不同的级别。有些人可能只测试小的细节 - *测试一个模型方法返回的值
+是否如预期一样？* ， 而其他人则检测软件的整体运行是否正确  
+- *检测用户在网站上的一系列操作产生的结果正确与否？* 
+这其实和前面 :doc:`教程 第1部分 </intro/tutorial01>` 中的方法没有什么不同，就是使用
+shell 检查方法的行为，或者运行程序并输入数据来检查它的行为方式。
 
-What's different in *automated* tests is that the testing work is done for
-you by the system. You create a set of tests once, and then as you make changes
-to your app, you can check that your code still works as you originally
-intended, without having to perform time consuming manual testing.
 
-Why you need to create tests
+*自动化测试* 的不同之处就在由系统为你完成测试工作。你一旦创建了一组测试案例，当你修改了你的
+应用，你就可以检查你的代码是否仍然同预期的那样运行，而无需执行耗时的手动测试。
+
+为什么你需要创建测试
 ----------------------------
 
-So why create tests, and why now?
+那么为什么要创建测试？而且是现在呢？
 
-You may feel that you have quite enough on your plate just learning
-Python/Django, and having yet another thing to learn and do may seem
-overwhelming and perhaps unnecessary. After all, our polls application is
-working quite happily now; going through the trouble of creating automated
-tests is not going to make it work any better. If creating the polls
-application is the last bit of Django programming you will ever do, then true,
-you don't need to know how to create automated tests. But, if that's not the
-case, now is an excellent time to learn.
+你可能感觉学习 Python/Django 已经足够了，再去学习其他的东西也许没有必要。
+毕竟，我们的投票应用现在正常运行；而通过创建自动测试会使其运行得更好。
+如果创建的投票应用的是通过 Django 编程实现的，你从始至终都是这样做的，若是真的，那么你
+不需要知道如何创建自动化测试。但是如果不是这样的话，现在是一个很好的学习时间。
 
-Tests will save you time
+测试将节省你的时间
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-Up to a certain point, 'checking that it seems to work' will be a satisfactory
-test. In a more sophisticated application, you might have dozens of complex
-interactions between components.
+到了一定程度，'检查代码是否运行正常'将是一个理想的测试。在更复杂的应用中，你可能有
+几十个组件之间复杂的相互作用。
 
-A change in any of those components could have unexpected consequences on the
-application's behavior. Checking that it still 'seems to work' could mean
-running through your code's functionality with twenty different variations of
-your test data just to make sure you haven't broken something - not a good use
-of your time.
+在这些组件中的任何修改对应用的行为都可能产生意想不到的后果。
+检查应用仍然'似乎运行正常'可能意味着你的测试数据经过你的代码中二十多种变化功能后只是为了确保
+你没有破坏它们 - 没有很好地利用你的时间。
 
-That's especially true when automated tests could do this for you in seconds.
-If something's gone wrong, tests will also assist in identifying the code
-that's causing the unexpected behavior.
+特别是自动化测试可以在几秒中内为你做这件事。如果有什么地方出问题了，测试也将协助你找出
+造成意外的代码。
 
 Sometimes it may seem a chore to tear yourself away from your productive,
 creative programming work to face the unglamorous and unexciting business
