@@ -10,17 +10,17 @@
 
 
 
-* 每个模型是:class:`django.db.models.Model`的一个Python子类。
+* 每个模型是 :class:`django.db.models.Model` 的一个Python子类。
 
 * 该模型的每个属性都代表一个数据库字段。
 
-* 有了这一切，Django给你自动生成数据库的访问API；详见:doc:`/topics/db/queries`。
+* 有了这一切，Django给你自动生成数据库的访问API；详见 :doc:`/topics/db/queries`。
 
 
 例子
 =============
 
-这个模型例子定义一个 ``Person``， 他有 ``first_name`` 和 ``last_name``::
+这个模型例子定义一个 ``Person`` ，他有 ``first_name`` 和 ``last_name``::
 
     from django.db import models
 
@@ -28,10 +28,10 @@
         first_name = models.CharField(max_length=30)
         last_name = models.CharField(max_length=30)
 
-``first_name`` 和 ``last_name`` 是模型的字段（fields_ ）。 每个字段被指定为一个类的属性，
+``first_name`` 和 ``last_name`` 是模型的字段 fields_ 。 每个字段被指定为一个类的属性，
 每个属性映射到数据库的列。
 
-上面 ``Person`` 的模型将会创建如下的数据表::
+上面 ``Person`` 的模型将会创建如下的数据表:
 
 .. code-block:: sql
 
@@ -43,22 +43,22 @@
 
 一些技术说明：
 
-* 数据表名 ``myapp_person`` 是根据模型的元数据生成，但可以进行自定义。详见表名（ref:`table-names`）了解更多
+* 数据表名 ``myapp_person`` 是根据模型的元数据生成，但可以进行自定义。详见表名 :ref:`table-names` 了解更多
 
-* ``id`` 字段是自动添加的，但这一行为也可以被覆盖，详见：自动主键字段（ref:`automatic-primary-key-fields`）。
+* ``id`` 字段是自动添加的，但这一行为也可以被覆盖，详见：自动主键字段 :ref:`automatic-primary-key-fields` 。
 
 * 在这个例子中 ``CREATE TABLE`` 的SQL语句使用的是PostgreSQL的语法格式，但值得注意的是，Django将根据你
-  设置文件（:doc:`settings file </topics/settings>`）中指定的数据库后端生成相应的SQL语句。
+  设置文件 :doc:`settings file </topics/settings>` 中指定的数据库后端生成相应的SQL语句。
 
 
 使用模型
 ============
 
 一旦你定义好你的模型，你需要告诉Django你将要使用这些模型。这可以通过编辑您设置文件并
-在 :setting:`INSTALLED_APPS` 中添加包含你模型名称的``models.py``。
+在 :setting:`INSTALLED_APPS` 中添加包含你模型名称的 ``models.py`` 。
 
-例如，如果你应用的模型在``myapp.models``模块（应用的包结构是通过:djadmin:`manage.py startapp <startapp>`创建），
-那么:setting:`INSTALLED_APPS`添加的部分内容如下::
+例如，如果你应用的模型在 ``myapp.models`` 模块（应用的包结构是通过 :djadmin:`manage.py startapp <startapp>` 创建），
+那么 :setting:`INSTALLED_APPS` 添加的部分内容如下::
 
     INSTALLED_APPS = (
         #...
