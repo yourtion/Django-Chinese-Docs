@@ -1,29 +1,26 @@
 ======
-Models
+模型
 ======
 
 .. module:: django.db.models
 
-A model is the single, definitive source of data about your data. It contains
-the essential fields and behaviors of the data you're storing. Generally, each
-model maps to a single database table.
+模型是单一的，明确你数据的源格式。它包含你存储数据的基本字段和行为。通常，每个模型映射到一个数据表。
 
-The basics:
-
-* Each model is a Python class that subclasses
-  :class:`django.db.models.Model`.
-
-* Each attribute of the model represents a database field.
-
-* With all of this, Django gives you an automatically-generated
-  database-access API; see :doc:`/topics/db/queries`.
+基础知识：
 
 
-Quick example
+
+* 每个模型是:class:`django.db.models.Model`的一个Python子类。
+
+* 该模型的每个属性都代表一个数据库字段。
+
+* 有了这一切，Django给你自动生成数据库的访问API；详见:doc:`/topics/db/queries`。
+
+
+例子
 =============
 
-This example model defines a ``Person``, which has a ``first_name`` and
-``last_name``::
+这个模型例子定义一个 ``Person``， 他有 ``first_name`` 和 ``last_name``::
 
     from django.db import models
 
@@ -31,10 +28,10 @@ This example model defines a ``Person``, which has a ``first_name`` and
         first_name = models.CharField(max_length=30)
         last_name = models.CharField(max_length=30)
 
-``first_name`` and ``last_name`` are fields_ of the model. Each field is
-specified as a class attribute, and each attribute maps to a database column.
+``first_name`` 和 ``last_name`` 是模型的字段（fields_ ）。 每个字段被指定为一个类的属性，
+每个属性映射到数据库的列。
 
-The above ``Person`` model would create a database table like this:
+上面 ``Person`` 的模型将会创建如下的数据表::
 
 .. code-block:: sql
 
@@ -44,31 +41,24 @@ The above ``Person`` model would create a database table like this:
         "last_name" varchar(30) NOT NULL
     );
 
-Some technical notes:
+一些技术说明：
 
-* The name of the table, ``myapp_person``, is automatically derived from
-  some model metadata but can be overridden. See :ref:`table-names` for more
-  details..
+* 数据表名 ``myapp_person`` 是根据模型的元数据生成，但可以进行自定义。详见表名（ref:`table-names`）了解更多
 
-* An ``id`` field is added automatically, but this behavior can be
-  overridden. See :ref:`automatic-primary-key-fields`.
+* ``id`` 字段是自动添加的，但这一行为也可以被覆盖，详见：自动主键字段（ref:`automatic-primary-key-fields`）。
 
-* The ``CREATE TABLE`` SQL in this example is formatted using PostgreSQL
-  syntax, but it's worth noting Django uses SQL tailored to the database
-  backend specified in your :doc:`settings file </topics/settings>`.
+* 在这个例子中 ``CREATE TABLE`` 的SQL语句使用的是PostgreSQL的语法格式，但值得注意的是，Django将根据你
+  设置文件（:doc:`settings file </topics/settings>`）中指定的数据库后端生成相应的SQL语句。
 
-Using models
+
+使用模型
 ============
 
-Once you have defined your models, you need to tell Django you're going to *use*
-those models. Do this by editing your settings file and changing the
-:setting:`INSTALLED_APPS` setting to add the name of the module that contains
-your ``models.py``.
+一旦你定义好你的模型，你需要告诉Django你将要使用这些模型。这可以通过编辑您设置文件并
+在 :setting:`INSTALLED_APPS` 中添加包含你模型名称的``models.py``。
 
-For example, if the models for your application live in the module
-``myapp.models`` (the package structure that is created for an
-application by the :djadmin:`manage.py startapp <startapp>` script),
-:setting:`INSTALLED_APPS` should read, in part::
+例如，如果你应用的模型在``myapp.models``模块（应用的包结构是通过:djadmin:`manage.py startapp <startapp>`创建），
+那么:setting:`INSTALLED_APPS`添加的部分内容如下::
 
     INSTALLED_APPS = (
         #...
@@ -76,8 +66,7 @@ application by the :djadmin:`manage.py startapp <startapp>` script),
         #...
     )
 
-When you add new apps to :setting:`INSTALLED_APPS`, be sure to run
-:djadmin:`manage.py syncdb <syncdb>`.
+当你向 :setting:`INSTALLED_APPS` 中添加了内容，那么必须运行 :djadmin:`manage.py syncdb <syncdb>` 更新数据库结构。
 
 Fields
 ======
